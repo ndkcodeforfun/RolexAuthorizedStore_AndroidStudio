@@ -1,24 +1,28 @@
 package com.example.lab10.model;
 
-import java.io.Serializable;
-
-public class Category implements Serializable {
+public class Product {
+    private int productId;
     private int categoryId;
-
     private String name;
-
     private String description;
-
+    private double price;
     private int status;
 
-    public Category() {
-
-    }
-    public Category(int categoryId, String name, String description, int status) {
+    public Product(int productId, int categoryId, String name, String description, double price, int status) {
+        this.productId = productId;
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
+        this.price = price;
         this.status = status;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getCategoryId() {
@@ -43,6 +47,14 @@ public class Category implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getStatus() {

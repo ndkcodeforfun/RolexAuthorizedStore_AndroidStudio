@@ -2,17 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.ProductActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btnCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Category" />
 
+        <Button
+            android:id="@+id/btnProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Product" />
+    </LinearLayout>
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category's Information"
+        android:text="Product's Information"
         android:textSize="25sp"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,13 +45,9 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/listViewCategory"
+            android:id="@+id/listViewProduct"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>

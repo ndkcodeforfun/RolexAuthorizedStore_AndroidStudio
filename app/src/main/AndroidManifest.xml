@@ -2,21 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="RolexAuthorizedStore_Admin"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Lab10"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".activity.CategoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AddCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ProductActivity"
+            android:exported="true"
+            android:label="Product"
+            android:theme="@style/Theme.Lab10" />
+        <activity
+            android:name=".activity.CategoryActivity"
+            android:exported="true"
+            android:label="Category">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
