@@ -19,7 +19,7 @@ public interface CategoryService {
     Call<List<Category>> getAllCategories();
 
     @GET("Category/{id}")
-    Call<Category> find(@Query("id") int id);
+    Call<Category> find(@Path("id") int id);
     @POST("Category")
     Call<Void> create(@Body Category category);
 

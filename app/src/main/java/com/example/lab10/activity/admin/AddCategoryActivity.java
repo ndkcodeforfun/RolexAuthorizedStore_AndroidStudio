@@ -1,4 +1,4 @@
-package com.example.lab10.activity;
+package com.example.lab10.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;

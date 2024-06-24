@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.admin.CategoryDetailActivity">
+    tools:context=".activity.admin.ProductDetailActivity">
+
 
 
 
@@ -14,19 +15,19 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category Information"
+        android:text="Add Product"
         android:textAlignment="center"
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/categoryId"
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
-        android:visibility="gone"/>
+        android:layout_margin="10dp"/>
+
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/editProductName2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -34,36 +35,45 @@
         android:hint="Name" />
 
     <EditText
-        android:id="@+id/editDescription"
+        android:id="@+id/editProductDescription2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
         android:hint="Description" />
+    <EditText
+        android:id="@+id/editProductPrice2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Price" />
+    <EditText
+        android:id="@+id/editProductQuantity2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Quantity" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnProductAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Edit" />
+            android:text="Save" />
+
 
         <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Delete" />
-
-        <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnProductCancel2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cancel" />
     </LinearLayout>
+
 </LinearLayout>

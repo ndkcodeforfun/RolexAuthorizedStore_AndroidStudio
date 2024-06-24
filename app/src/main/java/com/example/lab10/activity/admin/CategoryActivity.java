@@ -1,4 +1,4 @@
-package com.example.lab10.activity;
+package com.example.lab10.activity.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;

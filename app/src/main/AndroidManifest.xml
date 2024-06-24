@@ -16,18 +16,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.CategoryDetailActivity"
+            android:name=".activity.customer.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.AddCategoryActivity"
+            android:name=".activity.auth.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ProductActivity"
+            android:name=".activity.admin.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.CategoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.AddCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ProductActivity"
             android:exported="true"
             android:label="Product"
             android:theme="@style/Theme.Lab10" />
         <activity
-            android:name=".activity.CategoryActivity"
+            android:name=".activity.auth.LoginActivity"
             android:exported="true"
             android:label="Category">
             <intent-filter>

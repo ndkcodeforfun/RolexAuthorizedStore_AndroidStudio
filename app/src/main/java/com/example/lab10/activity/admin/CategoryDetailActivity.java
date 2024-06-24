@@ -1,11 +1,10 @@
-package com.example.lab10.activity;
+package com.example.lab10.activity.admin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,6 @@ import com.example.lab10.api.APIClient;
 import com.example.lab10.api.Category.CategoryRepository;
 import com.example.lab10.api.Category.CategoryService;
 import com.example.lab10.model.Category;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
