@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         categoryRecyclerView = findViewById(R.id.category_list);
         productRecyclerView = findViewById(R.id.featured_list);
 
-        // Set layout manager for RecyclerViews
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        productRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Set GridLayoutManager for RecyclerViews
+        categoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns for category
+        productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns for products
 
         loadCategories();
-        loadProducts();
+        loadAllProducts(); // Load all products initially
     }
 
     private void loadCategories() {
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     List<Category> categories = response.body();
                     categoryAdapter = new CategoryRecyclerViewAdapter(categories, MainActivity.this);
                     categoryRecyclerView.setAdapter(categoryAdapter);
+
+                    categoryAdapter.setOnCategoryClickListener(category -> loadProductsByCategory(category.getCategoryId()));
                 } else {
                     Toast.makeText(MainActivity.this, "Failed to load categories", Toast.LENGTH_SHORT).show();
                 }
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadProducts() {
+    private void loadAllProducts() {
         ProductService productService = APIClient.getClient().create(ProductService.class);
         Call<List<Product>> call = productService.getAllProducts();
 
@@ -81,6 +83,34 @@ public class MainActivity extends AppCompatActivity {
                     productRecyclerView.setAdapter(productAdapter);
                 } else {
                     Toast.makeText(MainActivity.this, "Failed to load products", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadProductsByCategory(int categoryId) {
+        ProductService productService = APIClient.getClient().create(ProductService.class);
+        Call<List<Product>> call = productService.getProductsByCategory(categoryId);
+
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> products = response.body();
+                    if (products.isEmpty()) {
+                        // If no products in this category, load all products
+                        loadAllProducts();
+                    } else {
+                        productAdapter = new ProductRecyclerViewAdapter(products, MainActivity.this);
+                        productRecyclerView.setAdapter(productAdapter);
+                    }
+                } else {
+                    loadAllProducts();
                 }
             }
 

@@ -12,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ProductService {
 
@@ -28,4 +29,7 @@ public interface ProductService {
 
     @PUT("product/setStatus/{id}")
     Call<Void> setStatus(@Path("id") int id);
+
+    @GET("Products")
+    Call<List<Product>> getProductsByCategory(@Query("CategoryId") int categoryId);
 }

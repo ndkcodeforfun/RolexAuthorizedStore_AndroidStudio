@@ -19,10 +19,19 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     private List<Category> categories;
     private Context context;
+    private OnCategoryClickListener onCategoryClickListener;
 
     public CategoryRecyclerViewAdapter(List<Category> categories, Context context) {
         this.categories = categories;
         this.context = context;
+    }
+
+    public interface OnCategoryClickListener {
+        void onCategoryClick(Category category);
+    }
+
+    public void setOnCategoryClickListener(OnCategoryClickListener listener) {
+        this.onCategoryClickListener = listener;
     }
 
     @NonNull
@@ -42,6 +51,12 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
         // If your images are loaded from URLs, use a library like Glide or Picasso
         // Glide.with(context).load(category.getImageUrl()).into(holder.imageView);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onCategoryClickListener != null) {
+                onCategoryClickListener.onCategoryClick(category);
+            }
+        });
     }
 
     @Override
