@@ -36,6 +36,10 @@
         <activity
             android:name=".activity.admin.AddCategoryActivity"
             android:exported="false" />
+
+        <activity android:name=".activity.customer.ProductDetailActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".activity.admin.ProductActivity"
             android:exported="true"

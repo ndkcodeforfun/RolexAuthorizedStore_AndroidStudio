@@ -1,6 +1,7 @@
 package com.example.lab10.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.activity.customer.ProductDetailActivity;
 import com.example.lab10.model.Product;
 
 import java.util.List;
@@ -40,8 +42,13 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         // Set the image resource if it is static or load from URL if dynamic
         holder.imageView.setImageResource(R.drawable.product); // Use static image
 
-        // If your images are loaded from URLs, use a library like Glide or Picasso
-        // Glide.with(context).load(product.getImageUrl()).into(holder.imageView);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProductDetailActivity.class);
+            intent.putExtra("productName", product.getName());
+            intent.putExtra("productDescription", product.getDescription());
+            intent.putExtra("productImage", R.drawable.product); // Use static image resource
+            context.startActivity(intent);
+        });
     }
 
     @Override
