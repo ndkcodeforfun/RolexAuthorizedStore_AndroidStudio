@@ -103,21 +103,25 @@ public class LoginActivity extends AppCompatActivity {
 
                             // Parse the body to get the role
                             JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
-                            String email = jsonObject.get("Email").getAsString();
+                            String role = jsonObject.get("Role").getAsString();
 
-                            if (email != null) {
+                            if (role != null) {
                                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                 Intent intent;
-                                if (email.equals("admin@gmail.com")) {
+                                if (role.equals("ADMIN")) {
                                     intent = new Intent(LoginActivity.this, CategoryActivity.class);
-                                } else  {
+                                    intent.putExtra("accessToken", accessToken);
+                                    startActivity(intent);
+                                    finish(); // Close LoginActivity
+                                } else if(role.equals("CUSTOMER")) {
                                     intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("accessToken", accessToken);
+                                    startActivity(intent);
+                                    finish(); // Close LoginActivity
                                 }
-                                intent.putExtra("accessToken", accessToken);
-                                startActivity(intent);
-                                finish(); // Close LoginActivity
+
                             } else {
-                                Toast.makeText(LoginActivity.this, "Email not found in token", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Role not found in token", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

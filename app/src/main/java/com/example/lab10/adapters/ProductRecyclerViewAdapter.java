@@ -59,12 +59,13 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("productName", product.getName());
-            intent.putExtra("productDescription", product.getDescription());
-            intent.putExtra("productPrice", product.getPrice());
+//            intent.putExtra("productName", product.getName());
+//            intent.putExtra("productDescription", product.getDescription());
+//            intent.putExtra("productPrice", product.getPrice());
             if (product.getImages() != null && !product.getImages().isEmpty()) {
                 intent.putExtra("productImage", product.getImages().get(0).getBase64StringImage());
             }
+            intent.putExtra("product", product);
             context.startActivity(intent);
         });
     }
