@@ -1,10 +1,13 @@
 package com.example.lab10.activity.customer;
 
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView productRecyclerView;
     private CategoryRecyclerViewAdapter categoryAdapter;
     private ProductRecyclerViewAdapter productAdapter;
+    private SearchView searchView;
+    private ImageView searchIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +41,26 @@ public class MainActivity extends AppCompatActivity {
 
         categoryRecyclerView = findViewById(R.id.category_list);
         productRecyclerView = findViewById(R.id.featured_list);
+        searchView = findViewById(R.id.search_view);
+        searchIcon = findViewById(R.id.ic_search);
 
-        // Set GridLayoutManager for RecyclerViews
-        categoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns for category
-        productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns for products
+        // Set LinearLayoutManager for categoryRecyclerView with horizontal orientation
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        // Set GridLayoutManager for productRecyclerView with 2 columns
+        productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         loadCategories();
         loadAllProducts(); // Load all products initially
+
+        // Set search icon click listener
+        searchIcon.setOnClickListener(v -> {
+            String query = searchView.getQuery().toString();
+            if (!query.isEmpty()) {
+                searchProducts(query);
+            } else {
+                Toast.makeText(MainActivity.this, "Please enter a search term", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadCategories() {
@@ -111,6 +129,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     loadAllProducts();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void searchProducts(String query) {
+        ProductService productService = APIClient.getClient().create(ProductService.class);
+        Call<List<Product>> call = productService.searchProducts(query);
+
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> products = response.body();
+                    productAdapter = new ProductRecyclerViewAdapter(products, MainActivity.this);
+                    productRecyclerView.setAdapter(productAdapter);
+                } else {
+                    Toast.makeText(MainActivity.this, "No products found", Toast.LENGTH_SHORT).show();
                 }
             }
 

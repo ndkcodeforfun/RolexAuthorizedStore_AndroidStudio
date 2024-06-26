@@ -1,6 +1,7 @@
 package com.example.lab10.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Product implements Serializable {
     private int productId;
@@ -11,12 +12,12 @@ public class Product implements Serializable {
     private int status;
     private int quantity;
     private Category category;
-
+    private List<ProductImage> images;
 
     public Product() {
-
     }
-    public Product(int productId, int categoryId, String name, String description, double price, int status, int quantity, Category category) {
+
+    public Product(int productId, int categoryId, String name, String description, double price, int status, int quantity, Category category, List<ProductImage> images) {
         this.productId = productId;
         this.categoryId = categoryId;
         this.name = name;
@@ -25,8 +26,10 @@ public class Product implements Serializable {
         this.status = status;
         this.quantity = quantity;
         this.category = category;
+        this.images = images;
     }
 
+    // Getters and setters
     public int getProductId() {
         return productId;
     }
@@ -91,6 +94,14 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
+
     // Nested Category class
     public static class Category implements Serializable {
         private String name;
@@ -115,6 +126,33 @@ public class Product implements Serializable {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+    }
+
+    // Nested ProductImage class
+    public static class ProductImage implements Serializable {
+        private String imagePath;
+        private String base64StringImage;
+
+        public ProductImage(String imagePath, String base64StringImage) {
+            this.imagePath = imagePath;
+            this.base64StringImage = base64StringImage;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public String getBase64StringImage() {
+            return base64StringImage;
+        }
+
+        public void setBase64StringImage(String base64StringImage) {
+            this.base64StringImage = base64StringImage;
         }
     }
 }

@@ -32,4 +32,7 @@ public interface ProductService {
 
     @GET("Products")
     Call<List<Product>> getProductsByCategory(@Query("CategoryId") int categoryId);
+
+    @GET("product/search/{searchInput}")
+    Call<List<Product>> searchProducts(@Path("searchInput") String query);
 }
