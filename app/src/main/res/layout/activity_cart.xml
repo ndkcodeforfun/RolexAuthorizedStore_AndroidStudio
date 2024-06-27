@@ -7,47 +7,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background"
     tools:context=".activity.customer.fragments.CartFragment">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your shopping cart"
-        android:textSize="30dp"
-        android:layout_gravity="left"/>
+        android:text="Your Shopping Cart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_gravity="start"
+        android:paddingBottom="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCartItems"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="16dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
+
         <TextView
             android:id="@+id/SubTotal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="SUBTOTAL"
-            android:textSize="30dp"
             android:layout_weight="1"
-            android:layout_gravity="start"/>
+            android:text="SUBTOTAL"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/totalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="price"
-            android:textSize="30dp"
-            android:layout_gravity="end"/>
+            android:text="price"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/teal_200" />
     </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Order"
-        android:layout_margin="10dp"
-        android:background="@drawable/my_button_checkout">
-    </androidx.appcompat.widget.AppCompatButton>
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_checkout"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:textStyle="bold" />
+
+
 </LinearLayout>
