@@ -15,9 +15,7 @@
         android:theme="@style/Theme.Lab10"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".activity.customer.CartItemActivity"
-            android:exported="false" />
+
         <activity
             android:name=".activity.customer.MainActivity"
             android:exported="false" />
@@ -41,6 +39,13 @@
             android:exported="false" />
         <activity
             android:name=".activity.customer.ProductDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.customer.LocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.customer.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activity.admin.ProductActivity"

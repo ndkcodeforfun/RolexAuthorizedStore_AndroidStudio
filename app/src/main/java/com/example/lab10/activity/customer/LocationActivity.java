@@ -1,2 +1,4 @@
-package com.example.lab10.activity.customer;public class LocationActivity {
+package com.example.lab10.activity.customer;
+
+public class LocationActivity {
 }
