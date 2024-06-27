@@ -59,7 +59,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         buttonViewCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailActivity.this, CartFragment.class);
+                Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CartItem implements Serializable {
-    private int cartId;
+    private int itemId;
     private int customerId;
     private int productId;
     private int quantity;
@@ -14,20 +14,20 @@ public class CartItem implements Serializable {
     public CartItem() {
     }
 
-    public CartItem(int cartId, int customerId, int productId, int quantity, productVIew productVIew) {
-        this.cartId = cartId;
+    public CartItem(int itemId, int customerId, int productId, int quantity, productVIew productVIew) {
+        this.itemId = itemId;
         this.customerId = customerId;
         this.productId = productId;
         this.quantity = quantity;
         this.productVIew = productVIew;
     }
 
-    public int getCartId() {
-        return cartId;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getCustomerId() {

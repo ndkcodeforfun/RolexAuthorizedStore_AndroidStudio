@@ -9,26 +9,44 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.lab10.R;
 import com.example.lab10.activity.customer.ProductDetailActivity;
+import com.example.lab10.activity.customer.fragments.CartFragment;
+import com.example.lab10.api.CartItem.CartItemRepository;
+import com.example.lab10.api.CartItem.CartItemService;
+import com.example.lab10.api.Product.ProductRepository;
+import com.example.lab10.api.Product.ProductService;
 import com.example.lab10.model.CartItem;
 import com.example.lab10.model.Product;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRecyclerViewAdapter.ViewHolder>{
     private List<CartItem> items;
     private Context context;
+    private ProductService productService;
 
+    private CartItemService cartItemService;
 
-    public CartItemRecyclerViewAdapter(List<CartItem> items, Context context) {
+    private CartFragment cartFragment;
+
+    public CartItemRecyclerViewAdapter(List<CartItem> items, Context context, CartFragment cartFragment) {
         this.items = items;
         this.context = context;
+        this.cartFragment = cartFragment;
+        this.cartItemService = CartItemRepository.getCartItemService();
+        this.productService = ProductRepository.getProductService();
     }
 
     @NonNull
@@ -58,13 +76,62 @@ public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRe
         } else {
             holder.imageView.setImageResource(R.drawable.product); // Default image
         }
+        holder.itemView.setOnClickListener(v -> viewProductDetails(cart.getProductVIew().getProductId()));
 
+        holder.btnDelete.setOnClickListener(v -> deleteCartItem(cart.getItemId(), position));
 
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    private void viewProductDetails(int productId) {
+        Call<Product> call = productService.find(productId);
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Product product = response.body();
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    if (product.getImages() != null && !product.getImages().isEmpty()) {
+                        intent.putExtra("productImage", product.getImages().get(0).getBase64StringImage());
+                    }
+                    intent.putExtra("product", product);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "Failed to load product details", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void deleteCartItem(int itemId, int position) {
+        Call<Void> call = cartItemService.deleteItem(itemId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    items.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, items.size());
+                    Toast.makeText(context, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    cartFragment.updateTotalPrice();
+                } else {
+                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +141,8 @@ public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRe
 
         public EditText quantityEditText;
 
+        AppCompatButton btnDelete;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.tvItemName);
@@ -81,6 +150,7 @@ public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRe
             quantityEditText = itemView.findViewById(R.id.tvItemQuantity);
 
             imageView = itemView.findViewById(R.id.imgItem);
+            btnDelete = itemView.findViewById(R.id.btnDeleteItemCart);
         }
     }
 }
