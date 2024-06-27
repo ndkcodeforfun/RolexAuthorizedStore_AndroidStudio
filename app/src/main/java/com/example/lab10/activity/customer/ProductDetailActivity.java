@@ -44,6 +44,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private EditText quantityTextView;
 
     private Button buttonAddToCart;
+
+    private Button buttonViewCart;
     private Product product;
 
     private int customerId;
@@ -60,6 +62,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         productPriceTextView = findViewById(R.id.product_price);
         productStatusTextView = findViewById(R.id.product_status);
         quantityTextView = findViewById(R.id.number_edit_text);
+        buttonViewCart = findViewById(R.id.cart);
+        buttonViewCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, CartItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         String accessToken = getIntent().getStringExtra("accessToken");
         if (accessToken == null) {

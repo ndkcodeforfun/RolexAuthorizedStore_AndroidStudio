@@ -16,5 +16,5 @@ public interface CartItemService {
     Call<Void> AddToCart(@Body CartItem item);
 
     @GET("CartItem/{CustomerId}")
-    Call<List<CartItem>> getCartFromCustomer(@Path("id") int id);
+    Call<List<CartItem>> getCartFromCustomer(@Path("CustomerId") int id);
 }
