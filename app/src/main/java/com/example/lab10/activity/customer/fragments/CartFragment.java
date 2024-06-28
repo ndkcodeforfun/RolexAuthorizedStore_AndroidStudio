@@ -97,7 +97,6 @@ public class CartFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                loadCartItem();
                                 Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show();
                             } else {
                                 try {

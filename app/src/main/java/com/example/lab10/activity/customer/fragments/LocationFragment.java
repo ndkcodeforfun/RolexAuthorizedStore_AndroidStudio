@@ -60,19 +60,19 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
                 if (gMap != null) {
                     switch (position) {
                         case 0:
-                            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                             break;
                         case 1:
                             gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                             break;
                         case 2:
-                            gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             break;
                         case 3:
                             gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                             break;
                         default:
-                            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                             break;
                     }
                 }
@@ -92,11 +92,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
         this.gMap = googleMap;
 
         // Replace with your store's latitude and longitude
-        LatLng storeLocation = new LatLng(10.762622, 106.660172); // Example coordinates (Ho Chi Minh City, Vietnam)
+        LatLng storeLocation = new LatLng(10.875161439006936, 106.8007237477931); // Example coordinates (Ho Chi Minh City, Vietnam)
         this.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(storeLocation, 15));
 
         // Resize the custom icon
-        BitmapDescriptor customMarker = getCustomMarkerIcon(R.drawable.custom_store_icon, 100, 100); // 100x100 pixels
+        BitmapDescriptor customMarker = getCustomMarkerIcon(R.drawable.custom_store_logo, 100, 100); // 100x100 pixels
 
         MarkerOptions options = new MarkerOptions()
                 .position(storeLocation)
