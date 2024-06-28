@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.lab10.R;
 import com.example.lab10.activity.customer.fragments.CartFragment;
 import com.example.lab10.activity.customer.fragments.HomeFragment;
+import com.example.lab10.activity.customer.fragments.LocationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                 } else if (itemId == R.id.navigation_cart) {
                     selectedFragment = new CartFragment();
+                }else if (itemId == R.id.navigation_location) {
+                    selectedFragment = new LocationFragment();
                 }
 
                 if (selectedFragment != null) {
