@@ -8,14 +8,14 @@ public class Customer {
     private String name;
     private String address;
     private String phone;
-    private Date doB ;
+    private String doB ;
 
     public Customer(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public Customer(String email, String password, String name, String address, String phone, Date doB) {
+    public Customer(String email, String password, String name, String address, String phone, String doB) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -64,11 +64,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Date getDoB() {
+    public String getDoB() {
         return doB;
     }
 
-    public void setDoB(Date doB) {
+    public void setDoB(String doB) {
         this.doB = doB;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.lab10.activity.customer.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +14,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
 import com.example.lab10.activity.auth.JWTUtils;
+import com.example.lab10.activity.customer.MainActivity;
 import com.example.lab10.adapters.CartItemRecyclerViewAdapter;
 import com.example.lab10.api.CartItem.CartItemRepository;
 import com.example.lab10.api.CartItem.CartItemService;
@@ -46,10 +49,21 @@ public class CartFragment extends Fragment {
 
     AppCompatButton buttonOrder;
     private List<CartItem> items;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_cart, container, false);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Cart");
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            getActivity().finish();
+        });
 
         itemRecyclerView = view.findViewById(R.id.rvCartItems);
         totalPriceTextView = view.findViewById(R.id.totalPrice);
@@ -81,42 +95,44 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
 
                 List<OrderRequestDto> cartItems = new ArrayList<>();
-                for (CartItem item:items
-                     ) {
+                for (CartItem item : items) {
                     OrderRequestDto orderProduct = new OrderRequestDto();
                     orderProduct.setItemId(item.getItemId());
                     orderProduct.setCustomerId(item.getCustomerId());
                     orderProduct.setProductId(item.getProductId());
                     orderProduct.setQuantity(item.getQuantity());
                     cartItems.add(orderProduct);
+                }
+
+                OrderService orderService = OrderRepository.getOrderService();
+                Call<Void> call = orderService.createOrder(cartItems);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show();
+                            // Điều hướng về MainActivity sau khi đặt hàng thành công
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else {
+                            try {
+                                // Log the error body to understand the 400 error
+                                String errorBody = response.errorBody().string();
+                                Log.e("OrderError", "Error: " + errorBody);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(getContext(), "Order fail", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                    OrderService orderService = OrderRepository.getOrderService();
-                    Call<Void> call = orderService.createOrder(cartItems);
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                try {
-                                    // Log the error body to understand the 400 error
-                                    String errorBody = response.errorBody().string();
-                                    Log.e("OrderError", "Error: " + errorBody);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Toast.makeText(getContext(), "Order fail", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         return view;
@@ -134,8 +150,7 @@ public class CartFragment extends Fragment {
                     cartAdapter = new CartItemRecyclerViewAdapter(items, getContext(), CartFragment.this);
                     itemRecyclerView.setAdapter(cartAdapter);
                     calculateTotalPrice(items);
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), "Failed to load cart items", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -12,6 +12,7 @@ import com.example.lab10.R;
 import com.example.lab10.activity.customer.fragments.CartFragment;
 import com.example.lab10.activity.customer.fragments.HomeFragment;
 import com.example.lab10.activity.customer.fragments.LocationFragment;
+import com.example.lab10.activity.customer.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new CartFragment();
                 }else if (itemId == R.id.navigation_location) {
                     selectedFragment = new LocationFragment();
+                }else if (itemId == R.id.navigation_profile) {
+                selectedFragment = new ProfileFragment();
+
                 }
 
                 if (selectedFragment != null) {

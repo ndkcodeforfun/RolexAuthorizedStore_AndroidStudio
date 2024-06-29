@@ -11,7 +11,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="RolexAuthorizedStore_Admin"
+        android:label="RolexAuthorizedStore"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab10"
@@ -43,12 +43,6 @@
             android:name=".activity.customer.ProductDetailActivity"
             android:exported="false" />
 
-        <activity
-            android:name=".activity.customer.LocationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.customer.ProfileActivity"
-            android:exported="false" />
         <activity
             android:name=".activity.admin.ProductActivity"
             android:exported="true"

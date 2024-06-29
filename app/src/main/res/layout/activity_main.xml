@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/background"
+    android:background="@color/white"
     tools:context=".activity.customer.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,6 +42,7 @@
                 android:contentDescription="Search Icon"
                 android:padding="8dp"
                 android:src="@drawable/ic_search"
+                android:background="#92E0DBDB"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,12 +63,14 @@
         <!-- Welcome Text -->
         <TextView
             android:id="@+id/welcome_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Welcome to Rolex Store"
-            android:textColor="@color/background_color"
+            android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:background="@drawable/rounded_recyclerview_product_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_image"
@@ -79,7 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categories"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/welcome_text"
@@ -92,6 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_title"
@@ -99,14 +104,16 @@
             android:orientation="horizontal"
             android:scrollbars="horizontal" />
 
+
         <!-- Featured Products Section -->
         <TextView
             android:id="@+id/featured_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Featured Watches"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/black"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_list"
             android:layout_marginStart="16dp"
