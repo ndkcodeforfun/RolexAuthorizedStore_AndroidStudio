@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:background="@drawable/rounded_background_item_cart"
+    android:padding="10dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
 
     <ImageView
         android:id="@+id/imgItem"
@@ -29,15 +32,14 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="4dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvItemPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:paddingBottom="4dp" />
 
         <LinearLayout
@@ -51,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity: "
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:paddingEnd="8dp" />
 

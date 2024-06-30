@@ -13,7 +13,7 @@
     <color name="yellow">#e7ba30</color>
     <color name="green">#17D61A</color>
     <color name="grey">#63F9FFFE</color>
-
+    <color name="colorDivider">#E0E0E0</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>

@@ -97,6 +97,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                 item.setProductId(product.getProductId());
                 item.setCustomerId(customerId);
                 item.setQuantity(Integer.parseInt(quantityTextView.getText().toString()));
+                if(item.getQuantity() > product.getQuantity()) {
+                    Toast.makeText(getApplicationContext(), "You choose over quantity in our store, please try again", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 CartItemService cartItemService = CartItemRepository.getCartItemService();
                 Call<Void> call = cartItemService.AddToCart(item);
                 call.enqueue(new Callback<Void>() {

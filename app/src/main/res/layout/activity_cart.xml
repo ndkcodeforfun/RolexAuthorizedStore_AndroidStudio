@@ -7,14 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
     tools:context=".activity.customer.fragments.CartFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#F2D3DE"
         android:theme="?attr/actionBarTheme"
         app:popupTheme="?attr/actionBarPopupTheme"/>
 
@@ -25,7 +24,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_gravity="start"
         android:paddingBottom="16dp" />
 
@@ -40,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="#F2D3DE"
         android:paddingBottom="16dp">
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="SUBTOTAL"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/teal_200" />
+            android:textColor="@color/primary_text_color" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
