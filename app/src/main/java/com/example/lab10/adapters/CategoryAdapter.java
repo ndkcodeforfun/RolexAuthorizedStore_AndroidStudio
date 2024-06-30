@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,10 +35,10 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         Category category = categories.get(position);
         TextView textViewName = convertView.findViewById(R.id.textViewName);
         textViewName.setText(category.getName());
-        TextView textViewDes = convertView.findViewById(R.id.textViewDescription);
-        textViewDes.setText(category.getDescription());
         TextView textId = convertView.findViewById(R.id.textViewId);
         textId.setText(String.valueOf(category.getCategoryId()));
+        ImageView imageView = convertView.findViewById(R.id.category_image_admin);
+        imageView.setImageResource(R.drawable.img_3);
         return convertView;
     }
 }

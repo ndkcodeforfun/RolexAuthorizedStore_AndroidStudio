@@ -25,6 +25,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Product" />
+        <ImageView
+            android:id="@+id/logout_image_product"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logout" />
     </LinearLayout>
     <TextView
         android:id="@+id/textView"
