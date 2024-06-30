@@ -13,34 +13,26 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F2D3DE"
+        android:background="#050505"
         android:theme="?attr/actionBarTheme"
         app:popupTheme="?attr/actionBarPopupTheme"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your Shopping Cart"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_gravity="start"
-        android:paddingBottom="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCartItems"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         android:layout_weight="1"
-        android:paddingBottom="16dp" />
+        android:padding="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#F2D3DE"
-        android:paddingBottom="16dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
 
         <TextView
             android:id="@+id/SubTotal"
@@ -50,6 +42,7 @@
             android:text="SUBTOTAL"
             android:textColor="@color/black"
             android:textSize="18sp"
+            android:layout_marginLeft="16dp"
             android:textStyle="bold" />
 
         <TextView
@@ -58,6 +51,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:layout_marginRight="16dp"
             android:textColor="@color/primary_text_color" />
     </LinearLayout>
 
@@ -66,10 +60,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Order"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:background="@drawable/my_button_checkout"
-        android:textColor="@color/black"
-        android:padding="12dp"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
 

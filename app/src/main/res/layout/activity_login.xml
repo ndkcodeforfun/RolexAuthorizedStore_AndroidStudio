@@ -1,10 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@drawable/img_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.auth.LoginActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="100dp"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/category_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/custom_store_logo" />
+
+</LinearLayout>
 
     <EditText
         android:id="@+id/edtU"
@@ -13,10 +31,10 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:layout_gravity="center"
+        />
 
     <EditText
         android:id="@+id/edtP"
@@ -25,33 +43,36 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Password"
+        android:layout_gravity="center"
         android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:layout_below="@id/edtU"
-        android:layout_centerHorizontal="true" />
+ />
 
-    <TextView
-        android:id="@+id/tvAY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtP"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="311dp"
-        android:layout_marginEnd="79dp"
-        android:gravity="center"
-        android:text="Not have account yet ? Sign Up"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignIn"
         android:layout_width="243dp"
         android:layout_height="56dp"
-        android:layout_marginTop="28dp"
-        android:text="SIGN IN"
-        android:layout_below="@id/tvAY"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="50dp"
+        android:text="Đăng nhập"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_button_background_black"
+        android:layout_below="@id/tvAY" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tvAY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtP"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:layout_marginTop="300dp"
+        android:text="Bạn chưa có tài khoản? Đăng ký"
+        android:textColor="#656565"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

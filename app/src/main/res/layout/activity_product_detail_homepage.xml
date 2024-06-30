@@ -16,16 +16,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#F2D3DE"
-            app:subtitleTextColor="@color/black"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:background="#000000"
+            app:subtitleTextColor="@color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -39,21 +38,22 @@
 
             <TextView
                 android:id="@+id/product_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginTop="16dp"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_bold" />
 
             <TextView
                 android:id="@+id/product_price"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_semi_bold" />
 
@@ -68,9 +68,9 @@
 
             <TextView
                 android:id="@+id/product_status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textStyle="bold"
                 android:textColor="#00FF0A"
                 android:background="#92FAFAFA"
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:background="@drawable/rounded_corner_background_light"
                 android:textColor="@color/black"
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Quantity: "
+                    android:text="Số lượng: "
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginEnd="8dp"
@@ -122,7 +122,7 @@
                     android:id="@+id/btnAddToCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add to Cart"
+                    android:text="Thêm vào giỏ hàng"
                     android:background="@drawable/rounded_button_background_cart"
                     android:textColor="@color/white"
                     android:padding="10dp"

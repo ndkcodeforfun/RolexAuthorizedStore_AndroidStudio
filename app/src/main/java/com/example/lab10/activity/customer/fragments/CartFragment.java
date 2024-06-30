@@ -3,6 +3,7 @@ package com.example.lab10.activity.customer.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,9 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_cart, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Cart");
+        toolbar.setTitle("Giỏ hàng");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         toolbar.setNavigationOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MainActivity.class);

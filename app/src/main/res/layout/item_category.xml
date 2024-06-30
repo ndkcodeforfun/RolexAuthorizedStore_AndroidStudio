@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/category_image"
         android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_3" />
 
@@ -24,6 +24,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_marginTop="8dp"
+        android:textStyle="bold"
         android:maxLines="2"
         android:ellipsize="end"
         android:gravity="center"
