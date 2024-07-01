@@ -2,6 +2,7 @@ package com.example.lab10.activity.admin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 
 public class CategoryDetailActivity extends AppCompatActivity {
 
-    private Button buttonEdit, buttonDelete, buttonCancel;
+    private Button buttonEdit, buttonDelete;
 
     private TextView textViewId, textViewName, textViewDes;
 
@@ -45,6 +47,19 @@ public class CategoryDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        Toolbar toolbar = findViewById(R.id.toolbarCategoryAdmin);
+        toolbar.setTitle("Chi tiết danh mục");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(CategoryDetailActivity.this, CategoryActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            CategoryDetailActivity.this.finish();
+        });
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         textViewName = (TextView) findViewById(R.id.editName);
         textViewDes = (TextView) findViewById(R.id.editDescription);
@@ -132,14 +147,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-            }
-        });
-        buttonCancel = findViewById(R.id.btnCancel);
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryDetailActivity.this, CategoryActivity.class);
-                startActivity(intent);
             }
         });
 

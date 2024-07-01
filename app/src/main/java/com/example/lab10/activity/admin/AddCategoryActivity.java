@@ -1,6 +1,7 @@
 package com.example.lab10.activity.admin;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -25,7 +27,7 @@ import retrofit2.Response;
 public class AddCategoryActivity extends AppCompatActivity {
 
 
-    private Button buttonSave, buttonClear;
+    private Button buttonSave;
 
     private EditText edName, edDescription;
     @Override
@@ -38,18 +40,20 @@ public class AddCategoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        Toolbar toolbar = findViewById(R.id.toolbarAddCategoryAdmin);
+        toolbar.setTitle("Thêm danh mục");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(AddCategoryActivity.this, CategoryActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            AddCategoryActivity.this.finish();
+        });
         edName = findViewById(R.id.editTextName);
         edDescription = findViewById(R.id.editTextDes);
         buttonSave = findViewById(R.id.btnAdd);
-        buttonClear = findViewById(R.id.btnClear);
-        buttonClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddCategoryActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override

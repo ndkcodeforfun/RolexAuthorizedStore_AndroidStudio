@@ -17,4 +17,7 @@ public interface OrderService {
 
     @GET("/api/v1/{CustomerId}")
     Call<List<OrderDtoResponse>> getOrdersByCustomerId(@Path("CustomerId") int customerId);
+
+    @GET("admin")
+    Call<List<OrderDtoResponse>> getAllOrders();
 }

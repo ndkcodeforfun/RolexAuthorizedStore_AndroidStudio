@@ -1,6 +1,7 @@
 package com.example.lab10.activity.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -8,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,9 +36,6 @@ import retrofit2.Response;
 public class CategoryActivity extends AppCompatActivity {
 
     private ListView listViewCategory;
-    private Button buttonProduct;
-
-    private ImageView logout;
     FloatingActionButton fab;
 
 
@@ -49,11 +48,19 @@ public class CategoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Toolbar toolbar = findViewById(R.id.toolbarCategoryAdminHome);
+        toolbar.setTitle("Các danh mục");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(CategoryActivity.this, AdminDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            CategoryActivity.this.finish();
+        });
 
         listViewCategory = findViewById(R.id.listViewCategory);
-        buttonProduct = findViewById(R.id.btnProduct);
-        logout = findViewById(R.id.logout_image_category);
-        logout.setOnClickListener(v -> signOut());
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,14 +68,6 @@ public class CategoryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CategoryActivity.this, AddCategoryActivity.class);
                 startActivity(intent);
-            }
-        });
-        buttonProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryActivity.this, ProductActivity.class);
-                startActivity(intent);
-
             }
         });
 
@@ -112,19 +111,6 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
     }
-    private void signOut() {
-        String accessToken = getIntent().getStringExtra("accessToken");
-        if(accessToken == null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("accessToken");
-            editor.apply();
-        }
 
-        Intent intent = new Intent(CategoryActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
 
 }

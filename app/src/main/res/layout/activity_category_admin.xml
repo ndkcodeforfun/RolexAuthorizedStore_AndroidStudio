@@ -8,36 +8,24 @@
     android:orientation="vertical"
     tools:context=".activity.admin.CategoryActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <Button
-            android:id="@+id/btnCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Category" />
-
-        <Button
-            android:id="@+id/btnProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Product" />
-        <ImageView
-            android:id="@+id/logout_image_category"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logout" />
-    </LinearLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarCategoryAdminHome"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#000000"
+            app:subtitleTextColor="@color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+    </com.google.android.material.appbar.AppBarLayout>
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category's Information"
+        android:text="Thông tin các danh mục"
         android:textSize="25sp"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:text="Add Category"
+            android:text="Thêm danh mục"
             android:textSize="16sp" />
     </LinearLayout>
 

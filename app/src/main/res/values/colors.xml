@@ -20,4 +20,7 @@
     <color name="background_color">#FFFFFF</color>
     <color name="primary_text_color">#000000</color>
     <color name="secondary_text_color">#FFF2F2</color>
+
+
+    <color name="lavender">#8692f7</color>
 </resources>

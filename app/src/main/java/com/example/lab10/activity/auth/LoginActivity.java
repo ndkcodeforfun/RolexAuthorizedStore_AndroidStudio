@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import com.example.lab10.R;
+import com.example.lab10.activity.admin.AdminDashboardActivity;
 import com.example.lab10.activity.admin.CategoryActivity;
 import com.example.lab10.activity.customer.MainActivity;
 import com.example.lab10.api.auth.AuthRepository;
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                 Intent intent;
                                 if (role.equals("ADMIN")) {
-                                    intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                                    intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                                     intent.putExtra("accessToken", accessToken);
                                     startActivity(intent);
                                     finish(); // Close LoginActivity

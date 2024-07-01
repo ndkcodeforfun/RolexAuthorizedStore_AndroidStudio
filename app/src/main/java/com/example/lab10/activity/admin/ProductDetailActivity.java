@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -48,7 +50,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private Button btnEdit, btnDelete, btnCancel;
+    private Button btnEdit, btnDelete;
     private EditText productName, productDes, productPrice, productQuantity;
     private ImageView imageView;
     private Spinner spinner;
@@ -71,7 +73,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         btnEdit = findViewById(R.id.btnProductUpdate);
         btnDelete = findViewById(R.id.btnProductDelete);
-        btnCancel = findViewById(R.id.btnProductCancel);
 
         productName = findViewById(R.id.editProductName);
         productDes = findViewById(R.id.editProductDescription);
@@ -80,6 +81,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.product_image_admin_detail);
 
         spinner = findViewById(R.id.categorySpinner);
+
+        Toolbar toolbar = findViewById(R.id.toolbarProductAdmin);
+        toolbar.setTitle("Chi tiết sản phẩm");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(ProductDetailActivity.this, ProductActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            ProductDetailActivity.this.finish();
+        });
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         Intent intent = getIntent();
         product = (Product) intent.getSerializableExtra("product");
@@ -163,11 +178,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-
-        btnCancel.setOnClickListener(v -> {
-            Intent intentHome = new Intent(ProductDetailActivity.this, ProductActivity.class);
-            startActivity(intentHome);
         });
 
         btnDelete.setOnClickListener(v -> {

@@ -3,6 +3,7 @@ package com.example.lab10.activity.admin;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,9 +36,7 @@ import retrofit2.Response;
 public class ProductActivity extends AppCompatActivity {
 
     private ListView listViewProduct;
-    private Button buttonCategory, buttonProduct;
 
-    private ImageView logout;
     FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,22 @@ public class ProductActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Toolbar toolbar = findViewById(R.id.toolbarProductAdminHome);
+        toolbar.setTitle("Các sản phẩm");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(ProductActivity.this, AdminDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            ProductActivity.this.finish();
+        });
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         listViewProduct= findViewById(R.id.listViewProduct);
-        logout = findViewById(R.id.logout_image_product);
-        logout.setOnClickListener(v -> signOut());
+
         fab = findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,24 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        buttonCategory = findViewById(R.id.btnCategory);
-        buttonProduct = findViewById(R.id.btnProduct);
-        buttonCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProductActivity.this, CategoryActivity.class);
-                startActivity(intent);
 
-            }
-        });
-        buttonProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProductActivity.this, ProductActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
         ProductService productService = ProductRepository.getProductService();
         Call<List<Product>> call = productService.getAllProducts();
@@ -141,18 +136,5 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
     }
-    private void signOut() {
-        String accessToken = getIntent().getStringExtra("accessToken");
-        if(accessToken == null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("accessToken");
-            editor.apply();
-        }
 
-        Intent intent = new Intent(ProductActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
 }
