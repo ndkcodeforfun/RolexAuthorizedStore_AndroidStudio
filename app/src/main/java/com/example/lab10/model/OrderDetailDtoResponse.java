@@ -1,6 +1,8 @@
 package com.example.lab10.model;
 
-public class OrderDetailDtoResponse {
+import java.io.Serializable;
+
+public class OrderDetailDtoResponse implements Serializable {
     private int productId;
     private String productName;
     private double pricePerUnit;

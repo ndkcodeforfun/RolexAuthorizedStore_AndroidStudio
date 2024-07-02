@@ -114,10 +114,27 @@ public class ProfileFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     Customer customer = response.body();
                     emailTextView.setText(customer.getEmail());
-                    nameTextView.setText(customer.getName());
-                    addressTextView.setText(customer.getAddress());
-                    phoneTextView.setText(customer.getPhone());
-                    dobTextView.setText(customer.getDoB().toString());
+                    if(customer.getName() == null) {
+                        nameTextView.setText("Not available");
+                    }else{
+                        nameTextView.setText(customer.getName());
+                    }
+                    if(customer.getAddress() == null) {
+                        addressTextView.setText("Not available");
+                    }else{
+                        addressTextView.setText(customer.getAddress());
+                    }
+                    if(customer.getPhone() == null) {
+                        phoneTextView.setText("Not available");
+                    }else{
+                        phoneTextView.setText(customer.getPhone());
+                    }
+                    if(customer.getDoB() == null) {
+                        dobTextView.setText("Not available");
+                    }else{
+                        dobTextView.setText(customer.getDoB().toString());
+                    }
+
 
                     // If you have a profile image URL or base64, you can load it into profileImageView using Glide
                     // Glide.with(getActivity()).load(customer.getProfileImageUrl()).into(profileImageView);

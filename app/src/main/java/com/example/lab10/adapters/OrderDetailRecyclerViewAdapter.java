@@ -1,6 +1,7 @@
 package com.example.lab10.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.api.Customer.CustomerRepository;
+import com.example.lab10.api.Customer.CustomerService;
+import com.example.lab10.api.Product.ProductRepository;
+import com.example.lab10.api.Product.ProductService;
+import com.example.lab10.model.Customer;
 import com.example.lab10.model.OrderDetailDtoResponse;
+import com.example.lab10.model.Product;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderDetailRecyclerViewAdapter extends RecyclerView.Adapter<OrderDetailRecyclerViewAdapter.ViewHolder> {
 
@@ -34,9 +45,26 @@ public class OrderDetailRecyclerViewAdapter extends RecyclerView.Adapter<OrderDe
     @Override
     public void onBindViewHolder(@NonNull OrderDetailRecyclerViewAdapter.ViewHolder holder, int position) {
         OrderDetailDtoResponse detail = orderDetails.get(position);
-        holder.productNameTextView.setText("Product Name: " + detail.getProductName());
-        holder.pricePerUnitTextView.setText("Price Per Unit: $" + detail.getPricePerUnit());
-        holder.quantityTextView.setText("Quantity: " + detail.getQuantity());
+        ProductService productService = ProductRepository.getProductService();
+        Call<Product> call = productService.find(detail.getProductId());
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Product product = response.body();
+                    holder.productNameTextView.setText("Tên sản phẩm: " + product.getName());
+                } else {
+                    Log.e("ProfileFragment", "Failed to get customer info");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                Log.e("ProfileFragment", "Error fetching customer info", t);
+            }
+        });
+        holder.pricePerUnitTextView.setText("Giá: $" + detail.getPricePerUnit());
+        holder.quantityTextView.setText("Số lượng: " + detail.getQuantity());
     }
 
     @Override

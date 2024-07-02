@@ -1,6 +1,8 @@
 package com.example.lab10.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.activity.admin.OrderAdminDetailActivity;
+import com.example.lab10.activity.customer.ProductDetailActivity;
+import com.example.lab10.api.Customer.CustomerRepository;
+import com.example.lab10.api.Customer.CustomerService;
+import com.example.lab10.model.Customer;
 import com.example.lab10.model.OrderDtoResponse;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderAdminRecyclerViewAdapter extends RecyclerView.Adapter<OrderAdminRecyclerViewAdapter.ViewHolder> {
 
@@ -37,8 +48,31 @@ public class OrderAdminRecyclerViewAdapter extends RecyclerView.Adapter<OrderAdm
     public void onBindViewHolder(@NonNull OrderAdminRecyclerViewAdapter.ViewHolder holder, int position) {
         OrderDtoResponse order = orders.get(position);
         holder.orderIdTextView.setText(String.valueOf(order.getOrderId()));
-        holder.orderCustomerName.setText(String.valueOf(order.getCustomerId()));
+        CustomerService customerService = CustomerRepository.getCustomerService();
+        Call<Customer> call = customerService.getCustomerInfomation(order.getCustomerId());
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Customer customer = response.body();
+                    holder.orderCustomerName.setText(customer.getEmail());
+                } else {
+                    Log.e("ProfileFragment", "Failed to get customer info");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Log.e("ProfileFragment", "Error fetching customer info", t);
+            }
+        });
         holder.orderTotalPrice.setText(String.valueOf(order.getTotalPrice()));
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, OrderAdminDetailActivity.class);
+            intent.putExtra("order", order);
+            context.startActivity(intent);
+        });
     }
 
     @Override

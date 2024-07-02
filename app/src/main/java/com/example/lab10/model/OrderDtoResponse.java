@@ -1,8 +1,9 @@
 package com.example.lab10.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderDtoResponse {
+public class OrderDtoResponse implements Serializable {
     private int orderId;
     private int customerId;
     private double totalPrice;

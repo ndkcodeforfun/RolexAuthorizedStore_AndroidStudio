@@ -20,4 +20,7 @@ public interface OrderService {
 
     @GET("admin")
     Call<List<OrderDtoResponse>> getAllOrders();
+
+    @GET("detail/{id}")
+    Call<OrderDtoResponse> getOrderById(@Path("id") int id);
 }
