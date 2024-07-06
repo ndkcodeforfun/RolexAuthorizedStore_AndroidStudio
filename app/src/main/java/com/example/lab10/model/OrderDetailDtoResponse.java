@@ -1,5 +1,6 @@
 package com.example.lab10.model;
 
+
 import java.io.Serializable;
 
 public class OrderDetailDtoResponse implements Serializable {
