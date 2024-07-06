@@ -43,6 +43,7 @@
         android:id="@+id/editProductName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:ems="10"
         android:inputType="text"
         android:hint="Tên" />
@@ -52,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="5dp"
         android:inputType="text"
         android:hint="Mô tả" />
     <EditText
@@ -59,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="5dp"
         android:inputType="text"
         android:hint="Giá sản phẩm" />
     <EditText
@@ -67,6 +70,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:layout_margin="5dp"
         android:hint="Số lượng" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,19 +94,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnProductUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/rounded_button_background_black"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
             android:text="Lưu thông tin" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnProductDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/rounded_button_background_black"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
             android:text="Xóa sản phẩm" />
 

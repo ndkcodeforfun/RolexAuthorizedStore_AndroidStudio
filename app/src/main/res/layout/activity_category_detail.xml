@@ -42,6 +42,7 @@
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="10"
         android:inputType="text"
         android:hint="Tên loại" />
@@ -51,6 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="10dp"
+
         android:inputType="text"
         android:hint="Mô tả" />
     <LinearLayout
@@ -58,18 +61,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/rounded_button_background_black"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
             android:text="Lưu thông tin" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_background_black"
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:text="Xóa danh mục" />

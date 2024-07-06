@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="10dp"
         android:inputType="text"
         android:hint="Tên sản phẩm" />
 
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:layout_margin="10dp"
         android:hint="Mô tả" />
     <EditText
         android:id="@+id/editProductPrice2"
@@ -59,6 +61,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:layout_margin="10dp"
         android:hint="Giá sản phẩm" />
     <EditText
         android:id="@+id/editProductQuantity2"
@@ -66,6 +69,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:layout_margin="10dp"
         android:hint="Số lượng" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,11 +92,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnProductAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/rounded_button_background_black"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
             android:text="Lưu thông tin" />
 

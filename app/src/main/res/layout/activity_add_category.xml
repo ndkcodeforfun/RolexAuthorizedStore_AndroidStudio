@@ -35,6 +35,7 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="10"
         android:inputType="text"
         android:hint="Tên" />
@@ -43,6 +44,7 @@
         android:id="@+id/editTextDes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="10"
         android:inputType="text"
         android:hint="Mô tả" />
@@ -51,12 +53,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
+            android:background="@drawable/rounded_button_background_black"
             android:text="Lưu thông tin" />
 
 
