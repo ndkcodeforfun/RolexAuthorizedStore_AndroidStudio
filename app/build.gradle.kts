@@ -49,4 +49,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
     implementation ("com.google.android.gms:play-services-location:21.3.0")
+    implementation(files("libs/merchant-1.0.25.aar"))
+    implementation("com.squareup.okhttp3:okhttp:3.14.1")
 }
