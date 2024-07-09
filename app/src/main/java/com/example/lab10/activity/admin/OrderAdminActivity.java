@@ -80,13 +80,13 @@ public class OrderAdminActivity extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(OrderAdminActivity.this, "Failed to load categories", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderAdminActivity.this, "Tải dữ liệu danh mục thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<OrderDtoResponse>> call, Throwable t) {
-                Toast.makeText(OrderAdminActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderAdminActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

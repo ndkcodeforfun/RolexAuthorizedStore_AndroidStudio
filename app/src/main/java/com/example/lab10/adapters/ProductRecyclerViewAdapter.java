@@ -40,7 +40,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
         holder.textViewName.setText(product.getName());
-        holder.textViewPrice.setText(String.format("$%.2f", product.getPrice()));
+        holder.textViewPrice.setText(String.format("%.2f VND", product.getPrice()));
 
         // Load image using Glide
         if (product.getImages() != null && !product.getImages().isEmpty()) {

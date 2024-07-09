@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.example.lab10.model.CartItem;
 import com.example.lab10.model.Customer;
 import com.example.lab10.model.OrderDtoResponse;
 import com.example.lab10.model.OrderRequestDto;
+import com.example.lab10.model.VNPayUrl;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -95,15 +97,21 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
 
 
                 OrderService orderService = OrderRepository.getOrderService();
-                Call<Void> call = orderService.createOrder(cartItems);
-                call.enqueue(new Callback<Void>() {
+                Call<VNPayUrl> call = orderService.createOrder(cartItems);
+                call.enqueue(new Callback<VNPayUrl>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<VNPayUrl> call, Response<VNPayUrl> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(OrderCustomerDetailActivity.this, "Order successfully", Toast.LENGTH_SHORT).show();
-                            // Điều hướng về MainActivity sau khi đặt hàng thành công
-                            Intent intent = new Intent(OrderCustomerDetailActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            Toast.makeText(OrderCustomerDetailActivity.this, "Order successfully", Toast.LENGTH_SHORT).show();
+//                            // Điều hướng về MainActivity sau khi đặt hàng thành công
+//                            Intent intent = new Intent(OrderCustomerDetailActivity.this, MainActivity.class);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(intent);
+//                            finish();
+                            VNPayUrl paymentUrl = response.body(); // Lấy URL từ response
+
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(paymentUrl.getUrl()));
                             startActivity(intent);
                             finish();
                         } else {
@@ -119,7 +127,7 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<VNPayUrl> call, Throwable t) {
                         Toast.makeText(OrderCustomerDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

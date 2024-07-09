@@ -70,7 +70,7 @@
         android:id="@+id/btnOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="Thanh toán"
         android:layout_margin="16dp"
         android:background="@drawable/my_button_checkout"
         android:textColor="@color/white"

@@ -68,7 +68,7 @@
         android:layout_below="@id/edtP"
         android:layout_alignParentEnd="true"
         android:gravity="center"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="200dp"
         android:text="Bạn chưa có tài khoản? Đăng ký"
         android:textColor="#656565"
         android:textSize="20sp"

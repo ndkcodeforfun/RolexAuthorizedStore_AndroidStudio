@@ -88,8 +88,9 @@ public class CategoryDetailActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 Intent intent = new Intent(CategoryDetailActivity.this, CategoryActivity.class);
-                                Toast.makeText(getApplicationContext(), "Update successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
+                                finish();
                             }
                         }
 
@@ -110,9 +111,9 @@ public class CategoryDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle("Confirm");
-                    builder.setMessage("Are you sure");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Xác nhận");
+                    builder.setMessage("Bạn chắc chưa?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             CategoryService cateService = CategoryRepository.getCategoryService();
@@ -122,8 +123,9 @@ public class CategoryDetailActivity extends AppCompatActivity {
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if(response.isSuccessful()) {
                                         Intent intent = new Intent(CategoryDetailActivity.this, CategoryActivity.class);
-                                        Toast.makeText(getApplicationContext(), "Delete successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
 
@@ -134,7 +136,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
                             });
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

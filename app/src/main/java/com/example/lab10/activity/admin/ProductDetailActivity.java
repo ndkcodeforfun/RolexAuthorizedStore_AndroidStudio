@@ -164,8 +164,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Intent intent = new Intent(ProductDetailActivity.this, ProductActivity.class);
-                            Toast.makeText(getApplicationContext(), "Update successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
+                            finish();
                         }
                     }
 
@@ -183,28 +184,29 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Confirm");
-                builder.setMessage("Are you sure");
-                builder.setPositiveButton("Yes", (dialog, which) -> {
+                builder.setTitle("Xác nhận");
+                builder.setMessage("Bạn chắc chưa?");
+                builder.setPositiveButton("Có", (dialog, which) -> {
                     ProductService proService = ProductRepository.getProductService();
-                    Call<Void> call = proService.setStatus(product.getCategoryId());
+                    Call<Void> call = proService.delete(product.getProductId());
                     call.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 Intent intent = new Intent(ProductDetailActivity.this, ProductActivity.class);
-                                Toast.makeText(getApplicationContext(), "Update successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
+                                finish();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                         }
                     });
                 });
-                builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+                builder.setNegativeButton("Không", (dialog, which) -> dialog.cancel());
                 builder.create().show();
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -216,7 +218,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Vui lòng chọn hình ảnh"), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -260,7 +262,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         spinner.setSelection(categoryId - 1);
                     }
                 } else {
-                    Toast.makeText(ProductDetailActivity.this, "Failed to get categories", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductDetailActivity.this, "Không thể tải dữ liệu danh mục", Toast.LENGTH_SHORT).show();
                 }
             }
 

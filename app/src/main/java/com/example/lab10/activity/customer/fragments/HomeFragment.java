@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             if (!query.isEmpty()) {
                 searchProducts(query);
             } else {
-                Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Vui lòng nhập từ khóa để tìm kiếm", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -84,13 +84,13 @@ public class HomeFragment extends Fragment {
 
                     categoryAdapter.setOnCategoryClickListener(category -> loadProductsByCategory(category.getCategoryId()));
                 } else {
-                    Toast.makeText(getContext(), "Failed to load categories", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Không thể tải danh mục", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,13 +107,13 @@ public class HomeFragment extends Fragment {
                     productAdapter = new ProductRecyclerViewAdapter(products, getContext());
                     productRecyclerView.setAdapter(productAdapter);
                 } else {
-                    Toast.makeText(getContext(), "Failed to load products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Không thể tải sản phẩm", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -158,13 +158,13 @@ public class HomeFragment extends Fragment {
                     productAdapter = new ProductRecyclerViewAdapter(products, getContext());
                     productRecyclerView.setAdapter(productAdapter);
                 } else {
-                    Toast.makeText(getContext(), "No products found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

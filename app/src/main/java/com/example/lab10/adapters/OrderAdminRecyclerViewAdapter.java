@@ -68,6 +68,14 @@ public class OrderAdminRecyclerViewAdapter extends RecyclerView.Adapter<OrderAdm
         });
         holder.orderTotalPrice.setText(String.valueOf(order.getTotalPrice()));
 
+        if (order.getStatus() == 1){
+            holder.orderStatus.setText("Đã th.toán");
+        } else if (order.getStatus() == 0) {
+            holder.orderStatus.setText("Chưa th.toán");
+        } else if (order.getStatus() == 2) {
+            holder.orderStatus.setText("Đã hủy");
+        }
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderAdminDetailActivity.class);
             intent.putExtra("order", order);
@@ -84,12 +92,14 @@ public class OrderAdminRecyclerViewAdapter extends RecyclerView.Adapter<OrderAdm
         public TextView orderIdTextView;
         public TextView orderCustomerName;
         public TextView orderTotalPrice;
+        public TextView orderStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
             orderIdTextView = itemView.findViewById(R.id.textViewOrderID);
             orderCustomerName = itemView.findViewById(R.id.textViewCustomerName);
             orderTotalPrice = itemView.findViewById(R.id.textviewTotalPrice);
+            orderStatus = itemView.findViewById(R.id.textviewOrderStatus);
         }
     }
 }

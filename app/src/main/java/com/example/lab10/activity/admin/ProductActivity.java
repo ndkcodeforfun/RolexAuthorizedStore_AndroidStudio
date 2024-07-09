@@ -80,14 +80,14 @@ public class ProductActivity extends AppCompatActivity {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (!response.isSuccessful()) {
                     Log.e("ProductActivity", "Error: " + response.code());
-                    Toast.makeText(ProductActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProductActivity.this, "Lỗi: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 List<Product> products = response.body();
                 if (products == null || products.isEmpty()) {
                     Log.e("ProductActivity", "No data received");
-                    Toast.makeText(ProductActivity.this, "There's no data", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProductActivity.this, "Không có dữ liệu", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -110,7 +110,7 @@ public class ProductActivity extends AppCompatActivity {
                                 Product productInfo = response.body();
                                 if (productInfo == null) {
                                     Log.e("ProductActivity", "No data received");
-                                    Toast.makeText(ProductActivity.this, "There's no data", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ProductActivity.this, "Không có dữ liệu", Toast.LENGTH_LONG).show();
                                     return;
                                 }
                                 Intent intent = new Intent(ProductActivity.this, ProductDetailActivity.class);
@@ -121,7 +121,7 @@ public class ProductActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<Product> call, Throwable t) {
                                 Log.e("ProductActivity", "Failed to get data: " + t.getMessage(), t);
-                                Toast.makeText(ProductActivity.this, "Failed to get data: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(ProductActivity.this, "Tải dữ liệu thất bại: " + t.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -132,7 +132,7 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.e("ProductActivity", "Failed to load data: " + t.getMessage(), t);
-                Toast.makeText(ProductActivity.this, "Failed to load data: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProductActivity.this, "Tải dữ liệu thất bại: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

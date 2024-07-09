@@ -19,7 +19,7 @@
         android:id="@+id/textViewCustomerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:padding="8dp"
         android:background="@drawable/border_text_view"
         android:layout_margin="0dp"/>
@@ -28,7 +28,16 @@
         android:id="@+id/textviewTotalPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:background="@drawable/border_text_view"
+        android:layout_margin="0dp"/>
+
+    <TextView
+        android:id="@+id/textviewOrderStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:padding="8dp"
         android:background="@drawable/border_text_view"
         android:layout_margin="0dp"/>

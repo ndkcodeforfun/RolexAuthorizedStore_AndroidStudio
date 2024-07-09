@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // Notify
-    private final String REQUIRE = "Require";
+    private final String REQUIRE = "Không để trống";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                             String role = jsonObject.get("Role").getAsString();
 
                             if (role != null) {
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 Intent intent;
                                 if (role.equals("ADMIN")) {
                                     intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
@@ -129,17 +129,21 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Failed to decode token", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Login failed: No token received", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: No token received", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed: " + response.code(), Toast.LENGTH_SHORT).show();
+                    if(response.code() == 404){
+                        Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: " + response.code(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e("LoginActivity", "Login error: " + t.getMessage(), t);
-                Toast.makeText(LoginActivity.this, "Login error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("LoginActivity", "Lỗi đăng nhập: " + t.getMessage(), t);
+                Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -37,7 +37,7 @@ public class OrderAdminDetailActivity extends AppCompatActivity {
     private OrderDtoResponse order;
     private RecyclerView orderDetailsRecyclerView;
 
-    private TextView orderId, totalPrice, customerName, customerAddress;
+    private TextView orderId, totalPrice, customerName, customerAddress, orderStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +63,20 @@ public class OrderAdminDetailActivity extends AppCompatActivity {
         totalPrice = findViewById(R.id.total_price);
         customerName = findViewById(R.id.customer_name);
         customerAddress = findViewById(R.id.customer_address);
+        orderStatus = findViewById(R.id.order_status);
         orderDetailsRecyclerView = findViewById(R.id.order_details_recycler_view);
         Intent intent = getIntent();
         order = (OrderDtoResponse) intent.getSerializableExtra("order");
 
         orderId.setText(String.valueOf(order.getOrderId()));
         totalPrice.setText(String.valueOf(order.getTotalPrice()));
+        if (order.getStatus() == 1){
+            orderStatus.setText("Đã thanh toán");
+        } else if (order.getStatus() == 0) {
+            orderStatus.setText("Chưa thanh toán");
+        } else if (order.getStatus() == 2) {
+            orderStatus.setText("Đã hủy vì quá hạn thanh toán");
+        }
         CustomerService customerService = CustomerRepository.getCustomerService();
         Call<Customer> call = customerService.getCustomerInfomation(order.getCustomerId());
         call.enqueue(new Callback<Customer>() {

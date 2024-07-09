@@ -31,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edtCP;
     private TextView tvAA;
     private Button btnSU;
-    private final String REQUIRE = "Require";
+    private final String REQUIRE = "Không để trống";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +77,18 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Registration failed: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Đăng kí thất bại: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(SignUpActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,7 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
         if (!TextUtils.equals(edtP.getText().toString(), edtCP.getText().toString())) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Mật khẩu không trùng nhau", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;

@@ -69,8 +69,9 @@ public class AddCategoryActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 Intent intent = new Intent(AddCategoryActivity.this, CategoryActivity.class);
-                                Toast.makeText(getApplicationContext(), "Add successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
+                                finish();
                             }
                         }
 

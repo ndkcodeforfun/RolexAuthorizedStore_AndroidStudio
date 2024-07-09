@@ -55,9 +55,9 @@
             android:id="@+id/cell2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:padding="8dp"
-            android:text="Tên khách hàng"
+            android:text="Tên kh.hàng"
             android:textColor="@color/white"
             android:background="@android:color/holo_green_dark"/>
 
@@ -65,9 +65,19 @@
             android:id="@+id/cell3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:padding="8dp"
             android:text="Tổng số tiền"
+            android:textColor="@color/white"
+            android:background="@android:color/holo_green_dark"/>
+
+        <TextView
+            android:id="@+id/cell4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="Trạng thái"
             android:textColor="@color/white"
             android:background="@android:color/holo_green_dark"/>
     </LinearLayout>

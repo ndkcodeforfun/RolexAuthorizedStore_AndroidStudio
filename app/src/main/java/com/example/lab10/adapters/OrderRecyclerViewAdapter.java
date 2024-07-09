@@ -35,8 +35,16 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
     @Override
     public void onBindViewHolder(@NonNull OrderRecyclerViewAdapter.ViewHolder holder, int position) {
         OrderDtoResponse order = orders.get(position);
-        holder.orderIdTextView.setText("Order ID: " + order.getOrderId());
-        holder.totalPriceTextView.setText("Total Price: $" + order.getTotalPrice());
+        holder.orderIdTextView.setText("Mã đơn hàng: " + order.getOrderId());
+        holder.totalPriceTextView.setText("Tổng tiền: " + order.getTotalPrice() + " VND");
+
+        if (order.getStatus() == 1){
+            holder.orderStatusTextView.setText("Trạng thái: Đã thanh toán");
+        } else if (order.getStatus() == 0) {
+            holder.orderStatusTextView.setText("Trạng thái: Chưa thanh toán");
+        } else if (order.getStatus() == 2) {
+            holder.orderStatusTextView.setText("Trạng thái: Đã hủy vì quá hạn thanh toán");
+        }
 
         // Set up the RecyclerView for order details
         OrderDetailRecyclerViewAdapter adapter = new OrderDetailRecyclerViewAdapter(order.getOrderDetails(), context);
@@ -53,11 +61,13 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         public TextView orderIdTextView;
         public TextView totalPriceTextView;
         public RecyclerView orderDetailsRecyclerView;
+        public TextView orderStatusTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             orderIdTextView = itemView.findViewById(R.id.order_id);
             totalPriceTextView = itemView.findViewById(R.id.total_price);
+            orderStatusTextView = itemView.findViewById(R.id.order_status);
             orderDetailsRecyclerView = itemView.findViewById(R.id.order_details_recycler_view);
         }
     }

@@ -77,15 +77,15 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (!response.isSuccessful()) {
-                    Log.e("CategoryActivity", "Error: " + response.code());
-                    Toast.makeText(CategoryActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show();
+                    Log.e("CategoryActivity", "Lỗi: " + response.code());
+                    Toast.makeText(CategoryActivity.this, "Lỗi: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 List<Category> categories = response.body();
                 if (categories == null || categories.isEmpty()) {
-                    Log.e("CategoryActivity", "No data received");
-                    Toast.makeText(CategoryActivity.this, "There's no data", Toast.LENGTH_LONG).show();
+                    Log.e("CategoryActivity", "Không nhận được dữ liệu");
+                    Toast.makeText(CategoryActivity.this, "Không có dữ liệu", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -107,7 +107,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 Log.e("CategoryActivity", "Failed to load data: " + t.getMessage(), t);
-                Toast.makeText(CategoryActivity.this, "Failed to load data: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(CategoryActivity.this, "Tải dữ liệu thất bại: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

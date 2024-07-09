@@ -35,4 +35,7 @@ public interface ProductService {
 
     @GET("product/search/{searchInput}")
     Call<List<Product>> searchProducts(@Path("searchInput") String query);
+
+    @DELETE("product/{id}")
+    Call<Void> delete(@Path("id") int id);
 }

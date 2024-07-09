@@ -133,8 +133,9 @@ public class AddProductActivity extends AppCompatActivity {
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
                                         Intent intent = new Intent(AddProductActivity.this, ProductActivity.class);
-                                        Toast.makeText(getApplicationContext(), "Add successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
 
@@ -162,7 +163,7 @@ public class AddProductActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Vui lòng chọn hình ảnh"), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -207,7 +208,7 @@ public class AddProductActivity extends AppCompatActivity {
                         spinner.setSelection(0);
                     }
                 } else {
-                    Toast.makeText(AddProductActivity.this, "Failed to get categories", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, "Không thể tải danh mục", Toast.LENGTH_SHORT).show();
                 }
             }
 
