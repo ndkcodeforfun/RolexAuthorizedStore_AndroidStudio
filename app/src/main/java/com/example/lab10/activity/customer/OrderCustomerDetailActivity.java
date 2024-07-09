@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -28,12 +30,17 @@ import com.example.lab10.api.CartItem.CartItemRepository;
 import com.example.lab10.api.CartItem.CartItemService;
 import com.example.lab10.api.Customer.CustomerRepository;
 import com.example.lab10.api.Customer.CustomerService;
+import com.example.lab10.api.order.OrderRepository;
+import com.example.lab10.api.order.OrderService;
 import com.example.lab10.model.CartItem;
 import com.example.lab10.model.Customer;
 import com.example.lab10.model.OrderDtoResponse;
+import com.example.lab10.model.OrderRequestDto;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,12 +48,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderCustomerDetailActivity extends AppCompatActivity {
-
-    private List<OrderDtoResponse> products;
     private RecyclerView itemRecyclerView;
     private OrderCustomerDetailRecycleViewAdapter orderAdapter;
     private List<CartItem> items;
     private int customerId;
+
+    AppCompatButton buttonOrder;
+    private TextView totalPriceTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,44 +71,79 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
         toolbar.setSubtitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         toolbar.setNavigationOnClickListener(v -> {
-            Intent intent = new Intent(OrderCustomerDetailActivity.this, CartFragment.class);
+            Intent intent = new Intent(OrderCustomerDetailActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             OrderCustomerDetailActivity.this.finish();
         });
 
+        totalPriceTextView = findViewById(R.id.totalPrice);
         itemRecyclerView = findViewById(R.id.orders_recycler_view);
+        buttonOrder = findViewById(R.id.btnOrder);
+        buttonOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<OrderRequestDto> cartItems = new ArrayList<>();
+                for (CartItem item : items) {
+                    OrderRequestDto orderProduct = new OrderRequestDto();
+                    orderProduct.setItemId(item.getItemId());
+                    orderProduct.setCustomerId(item.getCustomerId());
+                    orderProduct.setProductId(item.getProductId());
+                    orderProduct.setQuantity(item.getQuantity());
+                    cartItems.add(orderProduct);
+                }
 
-        // Retrieve the accessToken from the intent
+
+                OrderService orderService = OrderRepository.getOrderService();
+                Call<Void> call = orderService.createOrder(cartItems);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(OrderCustomerDetailActivity.this, "Order successfully", Toast.LENGTH_SHORT).show();
+                            // Điều hướng về MainActivity sau khi đặt hàng thành công
+                            Intent intent = new Intent(OrderCustomerDetailActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            try {
+                                // Log the error body to understand the 400 error
+                                String errorBody = response.errorBody().string();
+                                Log.e("OrderError", "Error: " + errorBody);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(OrderCustomerDetailActivity.this, "Order fail", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(OrderCustomerDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
         String accessToken = getIntent().getStringExtra("accessToken");
-
-        // If accessToken is not available in the intent, get it from shared preferences
         if (accessToken == null) {
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             accessToken = sharedPreferences.getString("accessToken", null);
         }
-
-        // If accessToken is available, decode it to extract the CustomerId
         if (accessToken != null) {
             try {
-                // Decode the accessToken (assumes JWTUtils is a utility class to decode JWT tokens)
                 String[] decodedParts = JWTUtils.decoded(accessToken);
-                String body = decodedParts[1];  // The payload of the JWT token
-
-                // Parse the body to get the CustomerId
+                String body = decodedParts[1];
                 JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
                 customerId = Integer.parseInt(jsonObject.get("CustomerId").getAsString());
 
-                // Use the customerId as needed
-                // For example, display it in a TextView or use it in your business logic
-
             } catch (Exception e) {
-                // Handle exceptions (e.g., decoding errors, JSON parsing errors)
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to decode token", Toast.LENGTH_SHORT).show();
             }
         }
-
+        itemRecyclerView.setLayoutManager(new LinearLayoutManager(OrderCustomerDetailActivity.this, LinearLayoutManager.VERTICAL, false));
 
         CartItemService cartService = CartItemRepository.getCartItemService();
         Call<List<CartItem>> call = cartService.getCartFromCustomer(customerId);
@@ -110,11 +153,8 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     items = response.body();
                     orderAdapter = new OrderCustomerDetailRecycleViewAdapter(items, OrderCustomerDetailActivity.this);
-                    itemRecyclerView.setLayoutManager(new LinearLayoutManager(OrderCustomerDetailActivity.this)); // Set LayoutManager
                     itemRecyclerView.setAdapter(orderAdapter);
-                   // calculateTotalPrice(items);
-                } else {
-                    Toast.makeText(OrderCustomerDetailActivity.this, "Failed to load cart items", Toast.LENGTH_SHORT).show();
+                    calculateTotalPrice(items);
                 }
             }
 
@@ -125,32 +165,12 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
         });
 
 
-//        Call<Customer> call = customerService.getCustomerInfomation(order.getCustomerId());
-//        call.enqueue(new Callback<Customer>() {
-//            @Override
-//            public void onResponse(Call<Customer> call, Response<Customer> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Customer customer = response.body();
-//                    customerName.setText(customer.getEmail());
-//                    if(customer.getAddress() != null) {
-//                        customerAddress.setText(customer.getAddress());
-//                    }else{
-//                        customerAddress.setText("Not available");
-//                    }
-//
-//                } else {
-//                    Log.e("OrderAdminDetailActivity", "Failed to get customer info");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Customer> call, Throwable t) {
-//                Log.e("OrderAdminDetailActivity", "Error fetching customer info", t);
-//            }
-//        });
-//        OrderDetailRecyclerViewAdapter adapter = new OrderDetailRecyclerViewAdapter(order.getOrderDetails(), OrderCustomerDetailActivity.this);
-//        orderDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(OrderCustomerDetailActivity.this));
-//        orderDetailsRecyclerView.setAdapter(adapter);
-
+    }
+    private void calculateTotalPrice(List<CartItem> items) {
+        double totalPrice = 0.0;
+        for (CartItem item : items) {
+            totalPrice += item.getProductVIew().getPrice() * item.getQuantity();
+        }
+        totalPriceTextView.setText(String.format("$%.2f", totalPrice));
     }
 }

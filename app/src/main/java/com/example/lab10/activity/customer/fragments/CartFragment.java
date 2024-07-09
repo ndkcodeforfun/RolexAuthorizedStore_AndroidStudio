@@ -94,49 +94,8 @@ public class CartFragment extends Fragment {
         buttonOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), OrderCustomerDetailActivity.class);
                 startActivity(intent);
-//                List<OrderRequestDto> cartItems = new ArrayList<>();
-//                for (CartItem item : items) {
-//                    OrderRequestDto orderProduct = new OrderRequestDto();
-//                    orderProduct.setItemId(item.getItemId());
-//                    orderProduct.setCustomerId(item.getCustomerId());
-//                    orderProduct.setProductId(item.getProductId());
-//                    orderProduct.setQuantity(item.getQuantity());
-//                    cartItems.add(orderProduct);
-//                }
-
-//
-//                OrderService orderService = OrderRepository.getOrderService();
-//                Call<Void> call = orderService.createOrder(cartItems);
-//                call.enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                        if (response.isSuccessful()) {
-//                            Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show();
-//                            // Điều hướng về MainActivity sau khi đặt hàng thành công
-//                            Intent intent = new Intent(getActivity(), MainActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                            getActivity().finish();
-//                        } else {
-//                            try {
-//                                // Log the error body to understand the 400 error
-//                                String errorBody = response.errorBody().string();
-//                                Log.e("OrderError", "Error: " + errorBody);
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            Toast.makeText(getContext(), "Order fail", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//                        Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
             }
         });
         return view;
@@ -154,8 +113,6 @@ public class CartFragment extends Fragment {
                     cartAdapter = new CartItemRecyclerViewAdapter(items, getContext(), CartFragment.this);
                     itemRecyclerView.setAdapter(cartAdapter);
                     calculateTotalPrice(items);
-                } else {
-                    Toast.makeText(getContext(), "Failed to load cart items", Toast.LENGTH_SHORT).show();
                 }
             }
 

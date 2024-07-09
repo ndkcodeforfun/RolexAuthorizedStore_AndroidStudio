@@ -38,21 +38,18 @@ public class OrderCustomerDetailRecycleViewAdapter extends RecyclerView.Adapter<
     private Context context;
     private ProductService productService;
 
-    private CartItemService cartItemService;
-
 
 
     public OrderCustomerDetailRecycleViewAdapter(List<CartItem> items, Context context) {
         this.items = items;
         this.context = context;
-        this.cartItemService = CartItemRepository.getCartItemService();
         this.productService = ProductRepository.getProductService();
     }
 
     @NonNull
     @Override
     public OrderCustomerDetailRecycleViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cart_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.order_customer_item, parent, false);
         return new OrderCustomerDetailRecycleViewAdapter.ViewHolder(view);
     }
 
@@ -61,7 +58,7 @@ public class OrderCustomerDetailRecycleViewAdapter extends RecyclerView.Adapter<
         CartItem cart = items.get(position);
         holder.textViewName.setText(cart.getProductVIew().getName());
         holder.textViewPrice.setText(String.format("$%.2f", cart.getProductVIew().getPrice()));
-        holder.quantityEditText.setText(String.valueOf(cart.getQuantity()));
+        holder.quantityView.setText(String.valueOf(cart.getQuantity()));
         // Load image using Glide
         if (cart.getProductVIew().getImages() != null && !cart.getProductVIew().getImages().isEmpty()) {
             String base64Image = cart.getProductVIew().getImages().get(0).getBase64StringImage();
@@ -118,18 +115,15 @@ public class OrderCustomerDetailRecycleViewAdapter extends RecyclerView.Adapter<
         public TextView textViewPrice;
         public ImageView imageView;
 
-        public EditText quantityEditText;
-
-        AppCompatButton btnDelete;
+        public TextView quantityView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.tvItemName);
             textViewPrice = itemView.findViewById(R.id.tvItemPrice);
-            quantityEditText = itemView.findViewById(R.id.tvItemQuantity);
+            quantityView = itemView.findViewById(R.id.tvItemQuantity);
 
             imageView = itemView.findViewById(R.id.imgItem);
-            btnDelete = itemView.findViewById(R.id.btnDeleteItemCart);
         }
     }
 }
