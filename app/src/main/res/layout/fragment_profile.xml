@@ -71,11 +71,11 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
 
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/editTextName"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="John Doe"
+                            android:hint="Nhập họ tên"
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -94,13 +94,14 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
 
-                        <TextView
-                            android:id="@+id/email"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/editTextEmail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="johndoe@example.com"
+                            android:hint="Nhập email"
                             android:textSize="16sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -117,11 +118,11 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
 
-                        <TextView
-                            android:id="@+id/address"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/editTextAddress"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="123 Street, City"
+                            android:hint="Nhập địa chỉ"
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -140,11 +141,11 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
 
-                        <TextView
-                            android:id="@+id/phone"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/editTextPhone"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="+123456789"
+                            android:hint="Nhập SĐT"
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -163,16 +164,25 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
 
-                        <TextView
-                            android:id="@+id/dob"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/editTextDob"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="01-01-1990"
+                            android:hint="Nhập ngày sinh"
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cập nhật"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_button_background"
+                android:textColor="@color/white"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnViewOrders"

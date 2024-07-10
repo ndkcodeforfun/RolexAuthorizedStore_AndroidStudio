@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.lab10.R;
 import com.example.lab10.activity.customer.fragments.CartFragment;
+import com.example.lab10.activity.customer.fragments.ChatFragment;
 import com.example.lab10.activity.customer.fragments.HomeFragment;
 import com.example.lab10.activity.customer.fragments.LocationFragment;
 import com.example.lab10.activity.customer.fragments.ProfileFragment;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 }else if (itemId == R.id.navigation_profile) {
                 selectedFragment = new ProfileFragment();
 
+                }else if (itemId == R.id.navigation_chat) {
+                    selectedFragment = new ChatFragment();
                 }
 
                 if (selectedFragment != null) {

@@ -1,15 +1,14 @@
 package com.example.lab10.model;
 
-import java.util.Date;
-
 public class Customer {
     private String email;
     private String password;
     private String name;
     private String address;
     private String phone;
-    private String doB ;
+    private String doB;
 
+    // Existing constructors
     public Customer(String email, String password) {
         this.email = email;
         this.password = password;
@@ -23,7 +22,19 @@ public class Customer {
         this.phone = phone;
         this.doB = doB;
     }
+    public Customer() {
+    }
 
+    // New constructor
+    public Customer(String email, String name, String address, String phone, String doB) {
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.doB = doB;
+    }
+
+    // Getters and setters
     public String getEmail() {
         return email;
     }
