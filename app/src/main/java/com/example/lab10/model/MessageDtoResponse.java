@@ -6,9 +6,9 @@ public class MessageDtoResponse {
     private String customerName;
     private String content;
     private String sendTime;
+    private int status;
 
     // Getters and setters
-
     public int getMessageId() {
         return messageId;
     }
@@ -47,5 +47,13 @@ public class MessageDtoResponse {
 
     public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

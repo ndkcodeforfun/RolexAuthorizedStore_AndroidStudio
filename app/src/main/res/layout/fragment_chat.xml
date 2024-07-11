@@ -25,10 +25,12 @@
             android:hint="Enter message"
             android:padding="8dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send" />
+            android:background="@drawable/rounded_button_background_black"
+            android:text="Send"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

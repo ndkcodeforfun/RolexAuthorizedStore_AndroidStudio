@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("accessToken", accessToken);
-                        editor.apply();
 
                         try {
                             String[] decodedParts = JWTUtils.decoded(accessToken);

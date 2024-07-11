@@ -19,16 +19,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
-import com.example.lab10.activity.auth.JWTUtils;
 import com.example.lab10.api.Message.MessageRepository;
+import com.example.lab10.model.ChatHistoryResponse;
 import com.example.lab10.model.MessageDtoRequest;
 import com.example.lab10.model.MessageDtoResponse;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,20 +54,13 @@ public class ChatFragment extends Fragment {
         recyclerView.setAdapter(chatAdapter);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String accessToken = sharedPreferences.getString("accessToken", null);
-        if (accessToken != null) {
-            try {
-                String[] decodedParts = JWTUtils.decoded(accessToken);
-                String body = decodedParts[1];
-                JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
-                customerId = Integer.parseInt(jsonObject.get("CustomerId").getAsString());
-                loadChatHistory(customerId);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getContext(), "Failed to decode token", Toast.LENGTH_SHORT).show();
-            }
+        customerId = sharedPreferences.getInt("CustomerId", -1);
+
+        if (customerId != -1) {
+            Log.d("ChatFragment", "CustomerId retrieved from SharedPreferences: " + customerId);
+            loadChatHistory(customerId);
         } else {
-            Toast.makeText(getContext(), "Access token not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Customer ID not found", Toast.LENGTH_SHORT).show();
         }
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
@@ -82,36 +74,28 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadChatHistory(int customerId) {
-        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<List<MessageDtoResponse>>() {
+        Log.d("ChatFragment", "Loading chat history for CustomerId: " + customerId);
+        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
             @Override
-            public void onResponse(Call<List<MessageDtoResponse>> call, Response<List<MessageDtoResponse>> response) {
+            public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    chatAdapter.setMessages(response.body());
+                    ChatHistoryResponse chatHistoryResponse = response.body();
+                    chatAdapter.setMessages(chatHistoryResponse.getMessageHistory());
                 } else {
-                    try {
-                        Log.e("ChatFragment", "Failed to load chat history: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(getContext(), "Failed to load chat history", Toast.LENGTH_SHORT).show();
+                    Log.e("ChatFragment", "Failed to load chat history: " + getErrorBody(response.errorBody()));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<MessageDtoResponse>> call, Throwable t) {
-                Toast.makeText(getContext(), "Failed to load chat history: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ChatFragment", "Failed to load chat history", t);
+            public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
+                Log.e("ChatFragment", "Error loading chat history", t);
             }
         });
     }
 
     private void sendMessage() {
         String content = editTextMessage.getText().toString();
-        if (content.isEmpty()) {
-            Toast.makeText(getContext(), "Message cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
+        Log.d("ChatFragment", "Sending message: " + content + " for CustomerId: " + customerId);
         MessageDtoRequest request = new MessageDtoRequest();
         request.setCustomerId(customerId);
         request.setContent(content);
@@ -124,21 +108,23 @@ public class ChatFragment extends Fragment {
                     loadChatHistory(customerId);
                     editTextMessage.setText("");
                 } else {
-                    try {
-                        Log.e("ChatFragment", "Failed to send message: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(getContext(), "Failed to send message", Toast.LENGTH_SHORT).show();
+                    Log.e("ChatFragment", "Failed to send message: " + getErrorBody(response.errorBody()));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), "Failed to send message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ChatFragment", "Failed to send message", t);
+                Log.e("ChatFragment", "Error sending message", t);
             }
         });
+    }
+
+    private String getErrorBody(ResponseBody errorBody) {
+        try {
+            return errorBody != null ? errorBody.string() : "Unknown error";
+        } catch (IOException e) {
+            return "Error reading error body: " + e.getMessage();
+        }
     }
 
     private class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
