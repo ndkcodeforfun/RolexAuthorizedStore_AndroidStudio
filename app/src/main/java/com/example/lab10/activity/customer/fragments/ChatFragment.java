@@ -54,7 +54,7 @@ public class ChatFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         customerId = sharedPreferences.getInt("customerId", -1);
 
-        Log.d("ChatFragment", "Retrieved CustomerId: " + customerId);
+        Log.d("ChatFragment", "Id khách hàng được truy xuất: " + customerId);
 
         if (customerId != -1) {
             loadChatHistory(customerId);

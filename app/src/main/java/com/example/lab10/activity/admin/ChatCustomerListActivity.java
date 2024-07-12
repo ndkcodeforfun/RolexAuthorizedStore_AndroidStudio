@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.lab10.R;
 import com.example.lab10.adapters.CustomerAdapter;
@@ -27,6 +28,17 @@ public class ChatCustomerListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_customer_list);
+
+        // Setup Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarChatCustomerList);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // Handle back button press
+            }
+        });
 
         customerListView = findViewById(R.id.customerListView);
         loadCustomerList();
@@ -52,13 +64,13 @@ public class ChatCustomerListActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.e("ChatCustomerListActivity", "Tải danh sách customer thất bại (onResponse)");
+                    Log.e("ChatCustomerListActivity", "Tải danh sách khách hàng thất bại (onResponse)");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
-                Log.e("ChatCustomerListActivity", "Tải danh sách customer thất bại (onFailure)", t);
+                Log.e("ChatCustomerListActivity", "Tải danh sách khách hàng thất bại (onFailure)", t);
             }
         });
     }

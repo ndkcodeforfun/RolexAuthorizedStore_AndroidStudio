@@ -51,4 +51,5 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
     implementation(files("libs/merchant-1.0.25.aar"))
     implementation("com.squareup.okhttp3:okhttp:3.14.1")
+    implementation("androidx.core:core:1.13.1")
 }

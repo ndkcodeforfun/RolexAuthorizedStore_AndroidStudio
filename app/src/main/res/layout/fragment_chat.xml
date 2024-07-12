@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Enter message"
+            android:hint="Nhập tin nhắn"
             android:padding="12dp"
             android:background="@drawable/rounded_edittext_background" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_background_black"
-            android:text="Send"
+            android:text="Gửi"
             android:textColor="@android:color/white"
             android:layout_marginStart="8dp"
             android:padding="12dp"/>
