@@ -14,6 +14,9 @@ public interface MessageService {
     @POST("Message")
     Call<Void> sendMessage(@Body MessageDtoRequest messageDtoRequest);
 
+    @POST("Message/admin")
+    Call<Void> sendMessageAdmin(@Body MessageDtoRequest messageDtoRequest);
+
     @GET("Message/history/{CustomerId}")
     Call<ChatHistoryResponse> getChatHistoryByCustomerId(@Path("CustomerId") int customerId);
 }

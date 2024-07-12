@@ -18,4 +18,8 @@ public class MessageRepository {
     public static Call<Void> sendMessage(MessageDtoRequest messageDtoRequest) {
         return getMessageService().sendMessage(messageDtoRequest);
     }
+
+    public static Call<Void> sendMessageAdmin(MessageDtoRequest messageDtoRequest) {
+        return getMessageService().sendMessageAdmin(messageDtoRequest);
+    }
 }

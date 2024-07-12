@@ -3,7 +3,7 @@ package com.example.lab10.model;
 public class MessageDtoResponse {
     private int messageId;
     private int customerId;
-    private String customerName;
+    private String type;
     private String content;
     private String sendTime;
     private int status;
@@ -25,12 +25,12 @@ public class MessageDtoResponse {
         this.customerId = customerId;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getType() {
+        return type;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getContent() {

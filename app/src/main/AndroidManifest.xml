@@ -18,23 +18,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.admin.AdminChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ChatCustomerListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.customer.PaymentFailedActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="rolexauthorizedstore" android:host="payment-failed" />
+
+                <data
+                    android:host="payment-failed"
+                    android:scheme="rolexauthorizedstore" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.customer.PaymentSuccessActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="rolexauthorizedstore" android:host="payment-success" />
+
+                <data
+                    android:host="payment-success"
+                    android:scheme="rolexauthorizedstore" />
             </intent-filter>
         </activity>
         <activity

@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
-
         if (!checkInput()) {
             return;
         }
@@ -96,36 +95,41 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("accessToken", accessToken);
-                        editor.apply();
+//                        editor.apply();
+
                         try {
                             String[] decodedParts = JWTUtils.decoded(accessToken);
                             String body = decodedParts[1];
 
-                            // Parse the body to get the role
+                            // Parse the body to get the role and possibly the CustomerId
                             JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
                             String role = jsonObject.get("Role").getAsString();
+                            Intent intent = null;
 
                             if (role != null) {
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent;
                                 if (role.equals("ADMIN")) {
                                     intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
-                                    intent.putExtra("accessToken", accessToken);
-                                    startActivity(intent);
-                                    finish(); // Close LoginActivity
-                                } else if(role.equals("CUSTOMER")) {
+                                } else if (role.equals("CUSTOMER")) {
                                     intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    if (jsonObject.has("CustomerId")) {
+                                        int customerId = jsonObject.get("CustomerId").getAsInt();
+                                        editor.putInt("customerId", customerId);
+                                    }
+                                }
+                                editor.apply();
+
+                                if (intent != null) {
                                     intent.putExtra("accessToken", accessToken);
                                     startActivity(intent);
                                     finish(); // Close LoginActivity
                                 }
-
                             } else {
-                                Toast.makeText(LoginActivity.this, "Role not found in token", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Không tìm thấy Role ở token", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(LoginActivity.this, "Failed to decode token", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Decode token thất bại", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: No token received", Toast.LENGTH_SHORT).show();
@@ -144,8 +148,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("LoginActivity", "Lỗi đăng nhập: " + t.getMessage(), t);
                 Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
+
         });
     }
+
     private boolean checkInput() {
         if (TextUtils.isEmpty(etUsername.getText().toString())) {
             etUsername.setError(REQUIRE);
@@ -155,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setError(REQUIRE);
             return false;
         }
-
 
         return true;
     }

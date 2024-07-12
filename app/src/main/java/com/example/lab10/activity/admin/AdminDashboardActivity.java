@@ -49,6 +49,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
             }
         });
         chatBox = findViewById(R.id.chatboxCard);
+        chatBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminDashboardActivity.this, ChatCustomerListActivity.class);
+                startActivity(intent);
+            }
+        });
+
         order = findViewById(R.id.orderCard);
         order.setOnClickListener(new View.OnClickListener() {
             @Override

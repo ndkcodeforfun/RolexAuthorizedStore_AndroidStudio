@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/messagesRecyclerViews"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -24,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Enter message"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edittext_background" />
+            android:padding="8dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSend"
@@ -33,9 +33,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_background_black"
             android:text="Send"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"
-            android:padding="12dp"/>
-
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

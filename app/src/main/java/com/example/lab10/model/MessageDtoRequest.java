@@ -2,6 +2,7 @@ package com.example.lab10.model;
 
 public class MessageDtoRequest {
     private int customerId;
+    private String type;
     private String content;
     private String sendTime;
 
@@ -12,6 +13,14 @@ public class MessageDtoRequest {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getContent() {

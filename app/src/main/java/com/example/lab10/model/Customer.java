@@ -1,6 +1,7 @@
 package com.example.lab10.model;
 
 public class Customer {
+    private int customerId;
     private String email;
     private String password;
     private String name;
@@ -22,6 +23,7 @@ public class Customer {
         this.phone = phone;
         this.doB = doB;
     }
+
     public Customer() {
     }
 
@@ -35,6 +37,14 @@ public class Customer {
     }
 
     // Getters and setters
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
     public String getEmail() {
         return email;
     }

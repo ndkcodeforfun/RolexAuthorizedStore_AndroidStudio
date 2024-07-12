@@ -20,14 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
 import com.example.lab10.api.Message.MessageRepository;
-import com.example.lab10.model.ChatHistoryResponse;
 import com.example.lab10.model.MessageDtoRequest;
 import com.example.lab10.model.MessageDtoResponse;
+import com.example.lab10.model.ChatHistoryResponse;
 
-import java.io.IOException;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,13 +52,14 @@ public class ChatFragment extends Fragment {
         recyclerView.setAdapter(chatAdapter);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        customerId = sharedPreferences.getInt("CustomerId", -1);
+        customerId = sharedPreferences.getInt("customerId", -1);
+
+        Log.d("ChatFragment", "Retrieved CustomerId: " + customerId);
 
         if (customerId != -1) {
-            Log.d("ChatFragment", "CustomerId retrieved from SharedPreferences: " + customerId);
             loadChatHistory(customerId);
         } else {
-            Toast.makeText(getContext(), "Customer ID not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Customer ID không tìm thấy", Toast.LENGTH_SHORT).show();
         }
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
@@ -74,32 +73,36 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadChatHistory(int customerId) {
-        Log.d("ChatFragment", "Loading chat history for CustomerId: " + customerId);
         MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
             @Override
             public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    ChatHistoryResponse chatHistoryResponse = response.body();
-                    chatAdapter.setMessages(chatHistoryResponse.getMessageHistory());
+                    chatAdapter.setMessages(response.body().getMessageHistory());
                 } else {
-                    Log.e("ChatFragment", "Failed to load chat history: " + getErrorBody(response.errorBody()));
+                    Log.e("ChatFragment", "Tải lịch sử chat thất bại (onResponse)");
                 }
             }
 
             @Override
             public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
-                Log.e("ChatFragment", "Error loading chat history", t);
+                Log.e("ChatFragment", "Tải lịch sử chat thất bại (onFailure)", t);
             }
         });
     }
 
     private void sendMessage() {
         String content = editTextMessage.getText().toString();
-        Log.d("ChatFragment", "Sending message: " + content + " for CustomerId: " + customerId);
+        if (content.isEmpty()) {
+            return;
+        }
+
+        Log.d("ChatFragment", "Đang gửi tin nhắn với CustomerId: " + customerId);
+
         MessageDtoRequest request = new MessageDtoRequest();
         request.setCustomerId(customerId);
         request.setContent(content);
         request.setSendTime(java.time.LocalDateTime.now().toString());
+        request.setType("CUSTOMER");
 
         MessageRepository.sendMessage(request).enqueue(new Callback<Void>() {
             @Override
@@ -108,40 +111,54 @@ public class ChatFragment extends Fragment {
                     loadChatHistory(customerId);
                     editTextMessage.setText("");
                 } else {
-                    Log.e("ChatFragment", "Failed to send message: " + getErrorBody(response.errorBody()));
+                    Log.e("ChatFragment", "Gửi tin nhắn thất bại (onResponse)");
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("ChatFragment", "Error sending message", t);
+                Log.e("ChatFragment", "Gửi tin nhắn thất bại (onFailure)", t);
             }
         });
     }
 
-    private String getErrorBody(ResponseBody errorBody) {
-        try {
-            return errorBody != null ? errorBody.string() : "Unknown error";
-        } catch (IOException e) {
-            return "Error reading error body: " + e.getMessage();
-        }
-    }
+    private class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private static final int VIEW_TYPE_CUSTOMER = 1;
+        private static final int VIEW_TYPE_ADMIN = 2;
 
-    private class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
         private List<MessageDtoResponse> messages;
+
+        @Override
+        public int getItemViewType(int position) {
+            MessageDtoResponse message = messages.get(position);
+            if ("CUSTOMER".equals(message.getType())) {
+                return VIEW_TYPE_CUSTOMER;
+            } else {
+                return VIEW_TYPE_ADMIN;
+            }
+        }
 
         @NonNull
         @Override
-        public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
-            return new ChatViewHolder(view);
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view;
+            if (viewType == VIEW_TYPE_CUSTOMER) {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_customer, parent, false);
+                return new CustomerViewHolder(view);
+            } else {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_admin, parent, false);
+                return new AdminViewHolder(view);
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageDtoResponse message = messages.get(position);
-            holder.textViewMessage.setText(message.getContent());
-            holder.textViewTime.setText(message.getSendTime());
+            if (holder instanceof CustomerViewHolder) {
+                ((CustomerViewHolder) holder).bind(message);
+            } else {
+                ((AdminViewHolder) holder).bind(message);
+            }
         }
 
         @Override
@@ -154,15 +171,37 @@ public class ChatFragment extends Fragment {
             notifyDataSetChanged();
         }
 
-        class ChatViewHolder extends RecyclerView.ViewHolder {
-            TextView textViewMessage;
-            TextView textViewTime;
+        class CustomerViewHolder extends RecyclerView.ViewHolder {
+            TextView textViewMessage, textViewTime;
 
-            public ChatViewHolder(@NonNull View itemView) {
+            public CustomerViewHolder(@NonNull View itemView) {
                 super(itemView);
                 textViewMessage = itemView.findViewById(R.id.textViewMessage);
                 textViewTime = itemView.findViewById(R.id.textViewTime);
             }
+
+            void bind(MessageDtoResponse message) {
+                textViewMessage.setText(message.getContent());
+                textViewTime.setText(message.getSendTime());
+            }
+        }
+
+        class AdminViewHolder extends RecyclerView.ViewHolder {
+            TextView textViewMessage, textViewTime;
+
+            public AdminViewHolder(@NonNull View itemView) {
+                super(itemView);
+                textViewMessage = itemView.findViewById(R.id.textViewMessage);
+                textViewTime = itemView.findViewById(R.id.textViewTime);
+            }
+
+            void bind(MessageDtoResponse message) {
+                textViewMessage.setText(message.getContent());
+                textViewTime.setText(message.getSendTime());
+            }
         }
     }
+
+
+
 }
