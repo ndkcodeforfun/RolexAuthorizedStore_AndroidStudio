@@ -60,7 +60,7 @@ public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRe
     public void onBindViewHolder(@NonNull CartItemRecyclerViewAdapter.ViewHolder holder, int position) {
         CartItem cart = items.get(position);
         holder.textViewName.setText(cart.getProductVIew().getName());
-        holder.textViewPrice.setText(String.format("$%.2f", cart.getProductVIew().getPrice()));
+        holder.textViewPrice.setText(String.format("%.2f VND", cart.getProductVIew().getPrice()));
         holder.quantityEditText.setText(String.valueOf(cart.getQuantity()));
         // Load image using Glide
         if (cart.getProductVIew().getImages() != null && !cart.getProductVIew().getImages().isEmpty()) {
@@ -120,10 +120,10 @@ public class CartItemRecyclerViewAdapter extends RecyclerView.Adapter<CartItemRe
                     items.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, items.size());
-                    Toast.makeText(context, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
                     cartFragment.updateTotalPrice();
                 } else {
-                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 

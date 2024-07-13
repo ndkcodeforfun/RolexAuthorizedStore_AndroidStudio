@@ -35,7 +35,7 @@ public class OrderDetailRecyclerViewAdapter extends RecyclerView.Adapter<OrderDe
     public void onBindViewHolder(@NonNull OrderDetailRecyclerViewAdapter.ViewHolder holder, int position) {
         OrderDetailDtoResponse detail = orderDetails.get(position);
         holder.productNameTextView.setText("Tên sản phẩm: " + detail.getProductName());
-        holder.pricePerUnitTextView.setText("Giá: $" + detail.getPricePerUnit());
+        holder.pricePerUnitTextView.setText("Giá: " + detail.getPricePerUnit() + " VND");
         holder.quantityTextView.setText("Số lượng: " + detail.getQuantity());
     }
 

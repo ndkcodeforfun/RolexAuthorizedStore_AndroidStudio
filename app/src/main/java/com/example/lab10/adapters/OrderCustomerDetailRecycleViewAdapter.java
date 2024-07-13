@@ -57,7 +57,7 @@ public class OrderCustomerDetailRecycleViewAdapter extends RecyclerView.Adapter<
     public void onBindViewHolder(@NonNull OrderCustomerDetailRecycleViewAdapter.ViewHolder holder, int position) {
         CartItem cart = items.get(position);
         holder.textViewName.setText(cart.getProductVIew().getName());
-        holder.textViewPrice.setText(String.format("$%.2f", cart.getProductVIew().getPrice()));
+        holder.textViewPrice.setText(String.format("%.2f VND", cart.getProductVIew().getPrice()));
         holder.quantityView.setText(String.valueOf(cart.getQuantity()));
         // Load image using Glide
         if (cart.getProductVIew().getImages() != null && !cart.getProductVIew().getImages().isEmpty()) {

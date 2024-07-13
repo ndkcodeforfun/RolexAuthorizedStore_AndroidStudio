@@ -3,22 +3,22 @@
     <item
         android:id="@+id/navigation_location"
         android:icon="@drawable/ic_location"
-        android:title="Location" />
+        android:title="Bản đồ" />
     <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/ic_cart"
-        android:title="Cart" />
+        android:title="Giỏ hàng" />
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Trang chủ" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:title="Hồ sơ" />
 
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/chatbox"
-        android:title="Chat" />
+        android:title="Tin nhắn" />
 </menu>

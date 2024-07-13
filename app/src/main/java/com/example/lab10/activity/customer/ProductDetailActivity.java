@@ -68,8 +68,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (product != null) {
             productNameTextView.setText(product.getName());
             productDescriptionTextView.setText(product.getDescription());
-            productPriceTextView.setText(String.format("$%.2f", product.getPrice()));
-            productStatusTextView.setText(product.getQuantity() > 0 ? "Product is available" : "Not available");
+            productPriceTextView.setText(String.format("%.2f VND", product.getPrice()));
+            productStatusTextView.setText(product.getQuantity() > 0 ? "Sản phẩm còn hàng" : "Sản phẩm đã hết hàng");
             productStatusTextView.setTextColor(getResources().getColor(product.getQuantity() > 0 ? R.color.green : R.color.red));
 
             if (product.getImages() != null && !product.getImages().isEmpty()) {
@@ -107,13 +107,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Added to cart successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Failed to add to cart", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (Exception e) {

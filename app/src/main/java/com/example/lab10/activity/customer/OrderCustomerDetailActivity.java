@@ -179,6 +179,6 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
         for (CartItem item : items) {
             totalPrice += item.getProductVIew().getPrice() * item.getQuantity();
         }
-        totalPriceTextView.setText(String.format("$%.2f", totalPrice));
+        totalPriceTextView.setText(String.format("%.2f VND", totalPrice));
     }
 }

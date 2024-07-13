@@ -42,7 +42,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Mật khẩu"
         android:layout_gravity="center"
         android:inputType="textPassword"
         android:textColor="@color/black"
